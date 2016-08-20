@@ -1,1 +1,14 @@
 D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\entity_begin.exe.config
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\entity_begin.exe
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\entity_begin.pdb
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\EntityFramework.dll
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\EntityFramework.SqlServer.dll
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\System.Data.SQLite.dll
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\System.Data.SQLite.EF6.dll
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\System.Data.SQLite.Linq.dll
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\EntityFramework.xml
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\EntityFramework.SqlServer.xml
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\System.Data.SQLite.xml
+D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.exe
+D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.pdb
+D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.csprojResolveAssemblyReference.cache
