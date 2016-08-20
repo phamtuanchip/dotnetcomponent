@@ -1,0 +1,8 @@
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\bin\Debug\CodeFirst.exe.config
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\obj\x86\Debug\CodeFirst.csprojResolveAssemblyReference.cache
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\bin\Debug\CodeFirst.exe
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\bin\Debug\CodeFirst.pdb
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\bin\Debug\EntityFramework.dll
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\bin\Debug\EntityFramework.xml
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\obj\x86\Debug\CodeFirst.exe
+D:\projects\dotnetcomponent\entity_codefirst\CodeFirst\obj\x86\Debug\CodeFirst.pdb

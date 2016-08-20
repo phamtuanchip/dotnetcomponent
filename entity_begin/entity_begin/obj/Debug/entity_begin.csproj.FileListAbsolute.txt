@@ -1,0 +1,1 @@
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\entity_begin.exe.config
