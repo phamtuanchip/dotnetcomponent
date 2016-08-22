@@ -24,11 +24,11 @@ namespace CodeFirst
                 .IsVariableLength()
                 .HasMaxLength(20);
 
-            //modelBuilder.Entity<Manager>()
-            //    .HasRequired(d => d.Department)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.DepartmentId)
-            //    .WillCascadeOnDelete();
+            modelBuilder.Entity<Manager>()
+                .HasRequired(d => d.Department)
+                .WithMany()
+                .HasForeignKey(d => d.DepartmentId)
+                .WillCascadeOnDelete();
         }
     }
 }

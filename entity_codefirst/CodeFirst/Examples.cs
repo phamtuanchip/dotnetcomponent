@@ -42,6 +42,7 @@ namespace CodeFirst
                 int recordsAffected = 0;
 
                 recordsAffected = db.SaveChanges();
+                
 
                 Console.WriteLine("{0} entities were saved to the database.", recordsAffected);
 

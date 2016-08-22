@@ -12,3 +12,4 @@ D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\System.Data.SQLi
 D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.exe
 D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.pdb
 D:\projects\dotnetcomponent\entity_begin\entity_begin\obj\Debug\entity_begin.csprojResolveAssemblyReference.cache
+D:\projects\dotnetcomponent\entity_begin\entity_begin\bin\Debug\Chinook_Sqlite.sqlite
