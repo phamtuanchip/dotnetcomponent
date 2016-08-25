@@ -11,3 +11,9 @@ Công nghệ
 ·         Azure Cloud service
 
 ·         Web API
+Example 
+https://docs.asp.net/en/latest/tutorials/first-mvc-app
+http://www.quartz-scheduler.net/
+https://autofac.org/
+http://www.tutorialspoint.com/entity_framework/
+http://www.tutorialspoint.com/microsoft_azure/
