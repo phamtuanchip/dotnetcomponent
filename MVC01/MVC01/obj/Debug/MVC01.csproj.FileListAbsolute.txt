@@ -80,3 +80,9 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAcc
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.xml

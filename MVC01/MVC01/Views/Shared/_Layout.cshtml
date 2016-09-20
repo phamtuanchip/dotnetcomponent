@@ -22,26 +22,83 @@
             </div>
             <div class="navbar-collapse collapse">
                  
-                <ul  class="nav navbar-nav">
+                <ul  class="nav navbar-nav" >
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Store", "Index", "Store")</li>
+                    <li>@Html.ActionLink("Manager", "Index", "StoreManager")</li>
+                    <li >
+                        <input id="searchbox" type="text" class="form-control" placeholder="Search" >
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div id="maincontent" class="container body-content" style="display:block;">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Pham</p>
         </footer>
     </div>
-
+    <div id="searchresult" class="container" style="display:none;">
+        <table id="result" class="table table-bordered"> 
+        <thead> <tr> <th>#</th><th>Album</th><th>Title</th> <th>Price</th>  </tr> </thead> 
+        <tbody> 
+            
+        </tbody> 
+        </table>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+
+    $(function () {
+        console.log('jquery load successull!')
+        $('#searchbox').keyup(function (key) {
+            console.log($('#searchbox').val());
+            console.log(key.keyCode);
+            switch (key.keyCode) {
+                case 13,16, 17, 18,27,32, 93:                     
+                    break;
+                default: {
+                    $.ajax({
+                        url: 'api/Restful/Search?key=' + $('#searchbox').val()
+
+                    }).done(function (data) {
+                        $("#result> tbody").children().remove();
+                        if (console && console.log && (data.length > 0)) {
+                            $.each(data, function (key, value) {
+                                console.log("detail of data :", value);
+                                $("#result> tbody").append("<tr>")
+                                    .append("<td>" + value.AlbumId + "</td>")
+                                    .append("<td><img src='" + value.AlbumArtUrl + "'/></td>")
+                                    .append("<td>" + value.Title + "</td>")
+                                    .append("<td>" + value.Price + "</td>")
+                                    .append("</tr>");
+                            });
+
+                            $('#maincontent').css('display', 'none');
+                            $('#searchresult').css('display', 'block');
+
+                        }
+                    });
+
+                }
+
+                 
+            }  
+
+           
+               
+        });
+
+        
+    });
+    </script>
 </body>
+
 </html>

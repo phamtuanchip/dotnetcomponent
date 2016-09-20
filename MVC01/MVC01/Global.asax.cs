@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
+using System.Web.Http;
 using System.Web.Routing;
+
 
 namespace MVC01
 {
@@ -12,11 +14,13 @@ namespace MVC01
     {
         protected void Application_Start()
         {
-            //System.Data.Entity.Database.SetInitializer(new MVC01.Models.SampleData());
+            System.Data.Entity.Database.SetInitializer(new MVC01.Models.SampleData());
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+           
         }
     }
 }

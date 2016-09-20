@@ -14,15 +14,17 @@ namespace MVC01.Controllers
         public ActionResult Index()
         {
             var genres = storeDB.Genres.ToList();
-
             return View(genres);
         }
-        public String Browse(String genre) {
-            String meg = HttpUtility.HtmlEncode("Hello from store.browser=" + genre);
-            return meg;
+        public ActionResult Browse(String genre) {
+            if (String.IsNullOrEmpty(genre)) return Index();
+            var genreModel = storeDB.Genres.Include("Albums").Single(g => g.Name == genre);
+            return View(genreModel);
         }
+
         public ActionResult Details(int id) {
-            var album = new Album { Title = "Album " + id };
+
+            var album = storeDB.Albums.Find(id);
             return View(album); 
         }
     }
