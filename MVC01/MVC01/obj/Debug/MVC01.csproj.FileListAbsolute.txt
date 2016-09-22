@@ -40,7 +40,10 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Web.Infrastructure.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Newtonsoft.Json.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Owin.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Helpers.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Mvc.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Optimization.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Razor.dll
@@ -54,6 +57,9 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.Web.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.WindowsServer.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.ApplicationInsights.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Helpers.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Mvc.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Optimization.xml
@@ -77,12 +83,6 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.OAuth.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Google.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache

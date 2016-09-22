@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using MVC01.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+
 namespace MVC01.Services
 {
     public class RestfulController : ApiController
@@ -38,6 +41,18 @@ namespace MVC01.Services
         // POST: api/Restful
         public HttpResponseMessage Post([FromBody]string value)
         {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, value);
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage AddTask([FromBody]string value)
+        {
+            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            // List<ReminderTask> reminder = JsonConvert.DeserializeObject<List<ReminderTask>>(output);
+            //json.UseDataContractJsonSerializer = true;
+            // db.Tasks.Add();
+            // db.SaveChanges();
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, value);
             return response;
         }
