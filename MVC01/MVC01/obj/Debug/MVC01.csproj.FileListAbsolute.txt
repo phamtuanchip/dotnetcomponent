@@ -93,3 +93,4 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache

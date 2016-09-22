@@ -20,7 +20,8 @@
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
  
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAdm1NhUYT7jonRRieUPnLSWw-yCxJRcd8&sensor=false&libraries=places"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyALC2zn_O1LcjlC4LQxv5Lk5FSmIZajh4U&sensor=false&libraries=places"></script>
+ 
  
 
 <style>
@@ -78,6 +79,8 @@ div
 .show( 1200 )
 .slideUp( "normal", runIt );
 }
+
+document.getElementById("date").valueAsDate = new Date();
 function showIt() {
 var n = div.queue( "fx" );
 //$("span" ).text( n.length );
@@ -92,6 +95,8 @@ setTimeout( showIt, 100 );
   if($("#mappicker").css('display') === "block"){
 	$("#mappicker").css('display', 'none');
   }
+
+ 
  });
 
 	 $("#edit").bind("click", function(){
@@ -185,10 +190,10 @@ function Add(){
 function Edit(element){
 	var selected_index = parseInt($(element).attr("alt").replace("Edit", ""));
 	tbClients[selected_index] = JSON.stringify({
-	    ReminderTaskId: index,
-	    Title: task,
-	    Priority: priority,
-	    isRemind: isReminde
+	    ReminderTaskId: ReminderTaskId,
+	    Title: Title,
+	    Priority: Priority,
+	    isRemind: isRemind
 		});//Alter the selected item on the table
 	localStorage.setItem("tbClients", JSON.stringify(tbClients));
 	console.log("The data was edited.")
@@ -202,17 +207,17 @@ function Edit(element){
  	var cli = JSON.parse(tbClients[selected_index]);
 	if(cli.Remided == 'false') cli.Remided = true;
 	var client = JSON.stringify({
-	    ReminderTaskId: cli.ID,
-	    Title: cli.Name,
-	    Priority: cli.PRI,
-	    RemindDate: cli.Date,
-	    isRemind: cli.Remide,
+	    ReminderTaskId: cli.ReminderTaskId,
+	    Title: cli.Title,
+	    Priority: cli.Priority,
+	    RemindDate: cli.RemindDate,
+	    isRemind: cli.isRemind,
 	    Remided: cli.Remided,
 	    GeoLocaltion: {
 	        //GeoLocaltionId: id,
-	        place: cli.Add,
-	        Latitude: cli.Lat,
-	        Longitude: cli.Lgn
+	        place: cli.GeoLocaltion.place,
+	        Latitude: cli.GeoLocaltion.Latitude,
+	        Longitude: cli.GeoLocaltion.Longitude
 	    } 
 	    
 	});
@@ -270,6 +275,172 @@ $("#taskform").bind("submit",function(){
 function verifyAddress(){
 	return true;
 }
+
+(function mapInit($, google) {
+    var marker;
+    var cityCircle;
+    var $mapCanvas = $('#map-canvas')[0];
+    var $searchLocation = $('#search');
+    var $address = $('#address');
+    var $radiusInput = $('#radius');
+
+    var geocoder = new google.maps.Geocoder();
+    var mapOptions = {
+        center: new google.maps.LatLng(21.0277644, 105.83415979999995),
+        zoom: 8
+    };
+    var map = new google.maps.Map($mapCanvas, mapOptions);
+    var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        position: new google.maps.LatLng(21.0277644, 105.83415979999995)
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    infowindow.setContent("Hanoi, Vietnam");
+    infowindow.open(map, marker);
+    var populationOptions = {
+        strokeColor: 'blue',
+        strokeOpacity: 0.5,
+        strokeWeight: 1,
+        fillColor: '#45C8DC',
+        fillOpacity: 0.35,
+        map: map,
+        center: new google.maps.LatLng(21.0277644, 105.83415979999995),
+        radius: 100
+    };
+    cityCircle = new google.maps.Circle(populationOptions);
+    cityCircle.map.fitBounds(cityCircle.getBounds());
+    var autocomplete = new google.maps.places.Autocomplete($address[0]);
+    autocomplete.bindTo('bounds', map);
+
+
+    //$('#tableLocationListId tr').find("#updateArea").hide();
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        if (verifyAddress()) {
+            $searchLocation.click();
+        }
+    });
+    google.maps.event.addListener(marker, 'dragend', function () {
+        console.log("in drag");
+        lat = marker.getPosition().lat();
+        lng = marker.getPosition().lng();
+        $("#latitudein").val(lat);
+        $("#longitudein").val(lng);
+        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    $("#address").val(results[0].formatted_address);
+                }
+            }
+        });
+    });
+
+    $('#search').off('click').on('click', function () {
+        console.log('search...');
+        if (verifyAddress()) {
+            var mapOptions = {
+                zoom: 15,
+                center: new google.maps.LatLng(21.0277644, 105.83415979999995)
+            };
+            var map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+            var marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                position: new google.maps.LatLng(21.0277644, 105.83415979999995)
+            });
+            var geocoder = new google.maps.Geocoder();
+            var addressVal = $("#address").val();
+            //var cityCircle;	
+            geocoder.geocode({ 'address': addressVal }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                    var infowindow = new google.maps.InfoWindow();
+                    marker = new google.maps.Marker({
+                        map: map,
+                        draggable: true,
+                        position: results[0].geometry.location
+                    });
+
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                    var radius = parseInt($('#radius').val(), 10);
+                    var populationOptions = {
+                        strokeColor: 'blue',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 1,
+                        fillColor: '#45C8DC',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: results[0].geometry.location,
+                        radius: radius
+                    };
+                    google.maps.event.addListener(marker, 'dragend', function () {
+                        console.log("in drag");
+                        lat = marker.getPosition().lat();
+                        lng = marker.getPosition().lng();
+                        $("#address_lat").val(lat);
+                        $("#address_lgn").val(lng);
+                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    $("#address").val(results[0].formatted_address);
+
+                                    var $radiusInput = $('#radius');
+                                    var radius = parseInt($radiusInput.val(), 10);
+                                    var populationOptions = {
+                                        strokeColor: 'blue',
+                                        strokeOpacity: 0.5,
+                                        strokeWeight: 1,
+                                        fillColor: '#45C8DC',
+                                        fillOpacity: 0.35,
+                                        map: map,
+                                        //center: results[0].geometry.location,
+                                        center: marker.getPosition(),
+                                        radius: radius
+                                    };
+
+                                    if (cityCircle) {
+                                        cityCircle.setMap(null);
+                                    }
+                                    cityCircle = new google.maps.Circle(populationOptions);
+                                    cityCircle.map.fitBounds(cityCircle.getBounds());
+                                    //$('#tableLocationListId tr.MapView').find("#localionName").val(results[0].formatted_address);
+                                    //$('#tableLocationListId tr.MapView').find("#latId").val(populationOptions.center.lat());
+                                    //$('#tableLocationListId tr.MapView').find("#lgnId").val(populationOptions.center.lng());
+                                    //$('#tableLocationListId tr.MapView').find("#radiusId").val(radius);
+                                }
+                            }
+                        });
+                    });
+                    if (cityCircle) {
+                        cityCircle.setMap(null);
+                    }
+                    cityCircle = new google.maps.Circle(populationOptions);
+                    cityCircle.map.fitBounds(cityCircle.getBounds());
+                    $("#address_lat").val(populationOptions.center.lat());
+                    $("#address_lgn").val(populationOptions.center.lng());
+
+                } else {
+                    //console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    });
+    $('#radius').on('change', function () {
+        if (verifyAddress()) {
+            cityCircle.setRadius(parseInt($(this).val(), 10));
+            cityCircle.map.fitBounds(cityCircle.getBounds());
+            //$("#radiusId").val(parseInt($(this).val(), 10));
+        }
+    });
+
+})($, google);
+
+
 }
 
 
@@ -278,44 +449,46 @@ function verifyAddress(){
 
  <div class="Alert"></div>
  <div class="container">
-     <p>Create task management: test commit</p>
+   
+     
 
+         <form class="form-inline" role="form" id="taskform">
+             <div class="form-group">
+                 <label for="task">New task</label> <input type="text"
+                                                           class="form-control" id="task" required="required" />
+             </div>
+             <div class="form-group">
+                 <label for="date">Date</label> <input type="date"
+                                                       class="form-control" id="date" required="required"  />
+             </div>
+             <div class="form-group">
+                 <label for="priority">Priority</label> <input type="number"
+                                                               class="form-control" id="priority" value="1" />
+             </div>
+             <div class="form-group">
+                 <input type="checkbox" class="form-control" id="remind"> <label for="remind">Remind</label>
+             </div>
+             <button type="button" class="btn btn-default" id="addbtn">Save</button>
+         </form>
+         <div class="form-inline" id="mappicker" style="display: none;">
+             <div class="form-group">
+                 <label for="address">when I am arrive</label>
+                 <input type="text" class="form-control" id="address" value="Hanoi, Vietnam" />
+                 <input type="hidden" class="form-control" id="address_lat" />
+                 <input type="hidden" class="form-control" id="address_lgn" />
+             </div>
+             <div class="form-group">
+                 <label for="priority">radius</label>
+                 <input type="number" class="form-control" id="radius" value="100" />
 
-     <form class="form-inline" role="form" id="taskform">
-         <div class="form-group">
-             <label for="task">New task</label> <input type="text"
-                 class="form-control" id="task" required="required" />
-         </div>
-         <div class="form-group">
-             <label for="date">Date</label> <input type="date"
-                 class="form-control" id="date" required="required" />
-         </div>
-         <div class="form-group">
-             <label for="priority">Priority</label> <input type="number"
-                 class="form-control" id="priority" value="1" />
-         </div>
-         <div class="form-group">
-             <input type="checkbox" class="form-control" id="remind"> <label
-                 for="remind"> Remind</label>
-         </div>
-         <button type="button" class="btn btn-default" id="addbtn">Save</button>
-     </form>
-     <div class="form-group" id="mappicker" style="display: none;">
-         <label for="address">when I am arrive</label> <input type="text"
-             class="form-control" id="address" value="Hanoi, Vietnam" /> <input
-             type="hidden" class="form-control" id="address_lat" /> <input
-             type="hidden" class="form-control" id="address_lgn" /> <label
-             for="priority">radius</label> <input type="number"
-             class="form-control" id="radius" value="100" />
+             </div>
+             <button type="button" class="btn btn-default" id="search">search</button>
 
-         <button type="button" class="btn btn-default" id="search">search</button>
-         <center>
              <div id="map-canvas"
-                 style="height: 600px; width: 800px; margin: 0; padding: 0;"></div>
-         </center>
-     </div>
+                  style="height: 600px; width: 800px; margin: 0; padding: 0;"></div>
 
-
+         </div>
+           
      <div class="table-responsive">
          <table class="table table-striped table-bordered" id="data">
              <thead>

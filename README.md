@@ -19,3 +19,4 @@ http://www.tutorialspoint.com/entity_framework/
 http://www.tutorialspoint.com/microsoft_azure/
 
 http://www.dofactory.com/net/design-patterns
+http://tuanpham-001-site1.hostbuddy.com/
