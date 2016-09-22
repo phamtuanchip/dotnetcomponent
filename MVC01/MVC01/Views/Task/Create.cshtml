@@ -260,7 +260,7 @@ $("#taskform").bind("submit",function(){
 
 		if(cli.Remided == true){finished = "Finished";}
 
-		var row = '<tr><td>' + cli.ReminderTaskId + '</td><td class="' + finished + '">' + cli.Title + '</td><td>' + cli.RemindDate + '</td><td>' + cli.Priority + '</td><td>' + cli.GeoLocaltion(0).place + '</td><td><span alt="Done' + i + '" onclick="javaScript:Done(this);">Done</span>|<span alt="Edit' + i + '" onclick="javaScript:Edit(this);">Edit</span>|<span id="delete" alt="Delete' + i + '"  onclick="javaScript:Delete(this);">Delete</span></td></tr>'
+		var row = '<tr><td>' + cli.ReminderTaskId + '</td><td class="' + finished + '">' + cli.Title + '</td><td>' + cli.RemindDate + '</td><td>' + cli.Priority + '</td><td>' + cli.GeoLocaltion.place + '</td><td><span alt="Done' + i + '" onclick="javaScript:Done(this);">Done</span>|<span alt="Edit' + i + '" onclick="javaScript:Edit(this);">Edit</span>|<span id="delete" alt="Delete' + i + '"  onclick="javaScript:Delete(this);">Delete</span></td></tr>'
 
 	  	$("#data").append(row);
 	}

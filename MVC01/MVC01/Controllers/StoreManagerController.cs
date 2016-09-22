@@ -5,16 +5,65 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using MVC01.Models;
+using PagedList;
 namespace MVC01.Controllers
 {
     public class StoreManagerController : Controller
     {
-        private MusicStoreEntities db = new MusicStoreEntities();
+        private MusicStoreEntities db = MusicStoreEntities.Instance();
         // GET: StoreManager
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+
+            ViewBag.NameSortParm = sortOrder != "name_desc" ? "name_desc" : "name";
+            ViewBag.TitleSortParm = sortOrder != "title_desc" ? "title_desc" : "title";
+            ViewBag.PriceSortParm = sortOrder != "price_desc" ? "price_desc" : "price";
+            ViewBag.CurrentSort = sortOrder;
             var albums = db.Albums.Include(a => a.Genre).Include(a => a.Artist);
-            return View(albums.ToList());
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                albums = albums.Where(s => s.Title.Contains(searchString));
+
+            }
+            albums = albums.OrderBy(s => s.Genre.Name);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    albums = albums.OrderByDescending(s => s.Artist.Name);
+                    break;
+                case "title_desc":
+                    albums = albums.OrderByDescending(s => s.Title);
+                    break;
+
+                case "name":
+                    albums = albums.OrderBy(s => s.Artist.Name);
+                    break;
+                case "title":
+                    albums = albums.OrderBy(s => s.Title);
+                    break;
+
+                case "price":
+                    albums = albums.OrderBy(s => s.Price);
+                    break;
+                case "price_desc":
+                    albums = albums.OrderByDescending(s => s.Price);
+                    break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(albums.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Details(int id)
         {

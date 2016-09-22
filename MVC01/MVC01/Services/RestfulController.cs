@@ -13,7 +13,7 @@ namespace MVC01.Services
 {
     public class RestfulController : ApiController
     {
-        MusicStoreEntities db = new MusicStoreEntities();
+        MusicStoreEntities db = MusicStoreEntities.Instance();
         // GET: api/Restful
          
         public JsonResult<List<Album>> Get()

@@ -13,6 +13,20 @@ namespace MVC01.Models
        
            : base("DefaultConnection")
         { }
+
+        private static MusicStoreEntities _instance = new MusicStoreEntities();
+        public static MusicStoreEntities Instance()
+        {
+            // Uses lazy initialization.
+            // Note: this is not thread safe.
+            //if (_instance == null)
+            //{
+             //   _instance = new MusicStoreEntities();
+           // }
+
+            return new MusicStoreEntities();
+        }
+
         public DbSet<Album> Albums { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Artist> Artists { get; set; }

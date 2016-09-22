@@ -23,7 +23,8 @@
             <div class="navbar-collapse collapse">
                  
                 <ul  class="nav navbar-nav" >
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+ 
+                    <li>@Html.ActionLink("Chat", "Chat", "Home")</li> 
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Store", "Index", "Store")</li>
@@ -37,13 +38,13 @@
             </div>
         </div>
     </div>
-    <div id="maincontent" class="container body-content" style="display:block;">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Pham</p>
-        </footer>
+    <div id="maincontent" class="container body-content" style="display:block; margin-top: 150px;position:relative;">
+        @RenderBody()      
     </div>
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Pham</p>
+    </footer>
     <div id="searchresult" class="container" style="display:none;">
         <table id="result" class="table table-bordered"> 
         <thead> <tr> <th>#</th><th>Album</th><th>Title</th> <th>Price</th>  </tr> </thead> 
@@ -76,9 +77,11 @@
                                 console.log("detail of data :", value);
                                 $("#result> tbody").append("<tr>")
                                     .append("<td>" + value.AlbumId + "</td>")
+                                     .append("<td><a href='/StoreManager/Details/" + value.AlbumId + "' > " + value.Title + "</a></td>")
+                                     .append("<td>" + value.Price + "</td>")
                                     .append("<td><img src='" + value.AlbumArtUrl + "'/></td>")
-                                    .append("<td>" + value.Title + "</td>")
-                                    .append("<td>" + value.Price + "</td>")
+                                   
+                                   
                                     .append("</tr>");
                             });
 

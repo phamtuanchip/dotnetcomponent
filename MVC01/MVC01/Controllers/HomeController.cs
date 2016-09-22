@@ -26,5 +26,13 @@ namespace MVC01.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public ActionResult Chat()
+        {
+            ViewBag.Message = "Your chat page.";
+
+            return View();
+        }
     }
 }
