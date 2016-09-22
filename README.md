@@ -17,3 +17,5 @@ http://www.quartz-scheduler.net/
 https://autofac.org/
 http://www.tutorialspoint.com/entity_framework/
 http://www.tutorialspoint.com/microsoft_azure/
+
+http://www.dofactory.com/net/design-patterns

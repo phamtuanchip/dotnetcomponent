@@ -27,6 +27,8 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.ApplicationInsights.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.Identity.Core.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Host.SystemWeb.dll
@@ -40,6 +42,8 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Web.Infrastructure.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Newtonsoft.Json.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Owin.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Helpers.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.dll
@@ -56,7 +60,11 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.ServerTelemetryChannel.
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.Web.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.WindowsServer.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.ApplicationInsights.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.xml
@@ -85,12 +93,3 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.Core.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.Core.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
