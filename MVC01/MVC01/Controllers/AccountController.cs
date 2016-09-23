@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC01.Models;
+using MVC01.Hubs;
 
 namespace MVC01.Controllers
 {
@@ -79,7 +80,12 @@ namespace MVC01.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        //inject broadcast message
+                        MessagesHub.SendMessages(model.Email, " has Online!");
+                        return RedirectToLocal(returnUrl);
+                    }
+                   
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -333,7 +339,10 @@ namespace MVC01.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    {
+                        
                     return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using MVC01.Hubs;
 namespace MVC01.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+           // MessagesHub.SendMessages("index page","visited"); 
             return View();
         }
 

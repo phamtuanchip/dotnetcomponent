@@ -12,6 +12,7 @@ namespace MVC01.Hubs
         {
             // Call the addNewMessageToPage method to update clients.
             Clients.All.addNewMessageToPage(name, message);
+            MessagesHub.SendMessages(name, message);
         }
     }
 }

@@ -69,5 +69,12 @@ namespace MVC01.Services
         public void Delete(int id)
         {
         }
+
+        [HttpGet]
+        public JsonResult<ApplicationUser> GetMessages()
+        {
+            
+            return Json(new ApplicationUser());
+        }
     }
 }
