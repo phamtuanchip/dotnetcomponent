@@ -13,10 +13,10 @@
         /* COPY css content from youtube video description*/
         .noti-content {
             position: fixed;
-            right: 100px;
+            left: 130px;
             background: #e5e5e5;
             border-radius: 4px;
-            top: 47px;
+            top: 45px;
             width: 250px;
             display: none;
             border: 1px solid #9E988B;
@@ -43,15 +43,15 @@
             border-style: dashed dashed solid;
             border-width: 0 8.5px 8.5px;
             position: absolute;
-            right: 32px;
-            top: -8px;
+            left: 32px;
+            top: -10px;
         }
 
         span.noti {
             color: #FF2323;
             margin: 10px;
             position: fixed;
-            right: 100px;
+            left: 150px;
             font-size: 18px;
             cursor: pointer;
         }
@@ -71,6 +71,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+               @if (Request.IsAuthenticated)
+               {
+
+                    <span class="noti glyphicon glyphicon-bell"><span class="count">&nbsp;</span></span>
+                    <div class="noti-content">
+                        <div class="noti-top-arrow"></div>
+                        <ul id="notiContent"></ul>
+                    </div>
+               }
+
                 @Html.ActionLink("My music store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
@@ -162,7 +172,9 @@
     });
     </script>
 
-    
+    @if (Request.IsAuthenticated)
+    {
+
 
     @* Add jquery code for Get Notification & setup signalr *@
     <script type="text/javascript">
@@ -261,7 +273,7 @@
     }
     </script>
 
-
+    }
 
 </body>
 

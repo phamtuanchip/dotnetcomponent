@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC01.Models;
 using MVC01.Hubs;
+using MVC01.Shedule;
 
 namespace MVC01.Controllers
 {
@@ -83,6 +84,7 @@ namespace MVC01.Controllers
                     {
                         //inject broadcast message
                         MessagesHub.SendMessages(model.Email, " has Online!");
+                       // ReminderJobScheduler.Start();
                         return RedirectToLocal(returnUrl);
                     }
                    

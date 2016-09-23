@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Newtonsoft.Json.Serialization;
 using System.Configuration;
 using System.Data.SqlClient;
+using MVC01.Shedule;
 
 namespace MVC01
 {
@@ -30,6 +31,7 @@ namespace MVC01
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //SqlDependency.Start(connString);
+            ReminderJobScheduler.Start();
         }
         protected void Application_End()
         {

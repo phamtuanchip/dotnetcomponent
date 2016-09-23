@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MVC01.Models;
 namespace MVC01.Controllers
 {
+    [Authorize]
     public class TaskController : Controller
     {
         MusicStoreEntities db = new MusicStoreEntities();
@@ -28,6 +29,32 @@ namespace MVC01.Controllers
         {
             return View();
         }
+
+        // GET: Task/Add
+        public ActionResult Add()
+        {
+            return View();
+        }
+        // POST: Task/Add
+        [HttpPost]
+        public ActionResult Add(ReminderTask task)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            return View();
+        }
+
 
         // POST: Task/Create
         [HttpPost]

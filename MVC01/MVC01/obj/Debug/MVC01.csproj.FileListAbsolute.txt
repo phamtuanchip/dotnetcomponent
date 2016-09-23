@@ -94,3 +94,12 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAcc
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.xml
