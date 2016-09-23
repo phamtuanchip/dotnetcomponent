@@ -6,6 +6,9 @@ using Quartz.Job;
 using Quartz;
 using MVC01.Hubs;
 using MVC01.Models;
+using Microsoft.AspNet.Identity;
+using System.Data.Entity;
+
 namespace MVC01.Shedule
 {
     public class ReminderJob : IJob
@@ -21,9 +24,16 @@ namespace MVC01.Shedule
     */
         public void Execute(IJobExecutionContext context)
         {
-           // db.Tasks.Include(a => ).Where(a=> a.)
-           MessagesHub.SendMessages(id, message);
-            System.Console.WriteLine("Job execute " + id +" : "+ message + "");
+            // db.Tasks.Include(a => ).Where(a=> a.)
+          
+           List<ReminderTask> remider=  db.Tasks.Where(a => a.RemindDate.Equals(DateTime.Today) && a.isRemind == true && a.Remided == false).ToList();
+            foreach(ReminderTask r in remider) { 
+                MessagesHub.SendMessages("For: "+ r.TaskOwner, r.Title);
+                r.Remided = !r.isRepeat;
+                db.Entry(r).State = EntityState.Modified;                
+            }
+            db.SaveChanges();
+
         }
     }
 }

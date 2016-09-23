@@ -28,6 +28,7 @@ namespace MVC01.Models
             GeoLocaltion = new GeoLocaltion();
         }
          public string TaskOwner { get; set; }
-    }
+         public bool isRepeat { get; set; }
+}
     
 }

@@ -15,7 +15,7 @@ namespace MVC01.Controllers
         {
             
 
-            return View(db.Tasks.ToList());
+            return View(db.Tasks.OrderBy(a=> a.RemindDate).ToList());
         }
 
         // GET: Task/Details/5
