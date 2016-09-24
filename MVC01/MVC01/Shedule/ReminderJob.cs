@@ -35,8 +35,14 @@ namespace MVC01.Shedule
                     isUpdate = true;
                 }
             }
-            if(isUpdate)
-            db.SaveChanges();
+            try
+            {
+                if (isUpdate)
+                    db.SaveChanges();
+            }
+            catch  {
+                MessagesHub.SendMessages(new Messages(Messages.LOG, null, "Error save db in job", null));
+            }
 
         }
     }

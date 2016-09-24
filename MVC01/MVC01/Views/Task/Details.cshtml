@@ -1,0 +1,99 @@
+﻿@model MVC01.Models.ReminderTask
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReminderTask</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GeoLocaltionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeoLocaltionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemindDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemindDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isRemind)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isRemind)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remided)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remided)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssigneeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssigneeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Assignee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Assignee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskOwner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskOwner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isRepeat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isRepeat)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReminderTaskId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

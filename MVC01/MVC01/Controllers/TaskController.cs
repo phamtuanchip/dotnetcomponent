@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC01.Models;
+using System.Data.Entity;
 namespace MVC01.Controllers
 {
     [Authorize]
@@ -20,7 +21,8 @@ namespace MVC01.Controllers
         // GET: Task/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+
+            return View(db.Tasks.Find(id));
         }
 
         // GET: Task/Create
@@ -80,29 +82,40 @@ namespace MVC01.Controllers
         // GET: Task/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(db.Tasks.Find(id));
         }
 
         // POST: Task/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ReminderTask reminder)
         {
             try
             {
-                // TODO: Add update logic here
-
+                db.Entry(reminder).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(db.Tasks.Find(id));
             }
         }
 
         // GET: Task/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            try
+            {
+                ReminderTask t = db.Tasks.Find(id);
+                db.Entry(t).State = EntityState.Deleted;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: Task/Delete/5
