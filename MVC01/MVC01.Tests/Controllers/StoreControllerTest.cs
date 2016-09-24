@@ -13,8 +13,7 @@ namespace MVC01.Tests.Controllers
     [TestClass]
      public class StoreControllerTest
     {
-        private readonly IServiceProvider serviceProvider;
-         
+      
         [TestMethod]
         public void Index() {
             StoreController scontrol = new StoreController();

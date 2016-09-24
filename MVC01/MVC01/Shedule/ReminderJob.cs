@@ -13,8 +13,7 @@ namespace MVC01.Shedule
 {
     public class ReminderJob : IJob
     {
-        string id = "Reminder:";
-        string message = "Task todo!";
+         
         MusicStoreEntities db = new MusicStoreEntities();
         /**
         public ReminderJob(string id, string message) {
@@ -25,13 +24,18 @@ namespace MVC01.Shedule
         public void Execute(IJobExecutionContext context)
         {
             // db.Tasks.Include(a => ).Where(a=> a.)
-          
+            bool isUpdate = false;
            List<ReminderTask> remider=  db.Tasks.Where(a => a.RemindDate.Equals(DateTime.Today) && a.isRemind == true && a.Remided == false).ToList();
             foreach(ReminderTask r in remider) { 
-                MessagesHub.SendMessages(new Messages(Messages.TODO,r.Title, r.Assignee));
+                MessagesHub.SendMessages(new Messages(Messages.TODO,r.TaskOwner, r.Title, r.Assignee));
                 r.Remided = !r.isRepeat;
-                db.Entry(r).State = EntityState.Modified;                
+                if(r.isRepeat)
+                { 
+                db.Entry(r).State = EntityState.Modified;
+                    isUpdate = true;
+                }
             }
+            if(isUpdate)
             db.SaveChanges();
 
         }

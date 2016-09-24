@@ -15,6 +15,8 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.dll.config
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.pdb
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Antlr3.Runtime.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\EntityFramework.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\EntityFramework.SqlServer.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.Agent.Intercept.dll
@@ -44,6 +46,7 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Newtonsoft.Json.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Owin.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Helpers.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.dll
@@ -55,6 +58,10 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.WebPages.Deployment.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.WebPages.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.WebPages.Razor.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\WebGrease.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.DependencyCollector.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AI.Web.xml
@@ -65,6 +72,8 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.AspNet.SignalR.SystemWeb.x
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\PagedList.Mvc.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Net.Http.Formatting.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\System.Web.Http.WebHost.xml
@@ -91,15 +100,6 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.OAuth.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Google.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.Twitter.xml
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.dll
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Common.Logging.Core.xml
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.pdb
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\Quartz.xml

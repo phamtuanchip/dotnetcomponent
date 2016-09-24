@@ -177,19 +177,27 @@
 
     @* Add jquery code for Get Notification & setup signalr *@
     <script type="text/javascript">
-    $(function () {
-        // Declare a proxy to reference the hub.
-        var notifications = $.connection.messagesHub;
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var notifications = $.connection.messagesHub;
 
-        //debugger;
-        // Create a function that the hub can call to broadcast messages.
-        notifications.client.updateMessages = function (message) {
-            console.log("Server call backed!");
-            console.log(message);
-            getAllMessages();
-            if ($("#currentUser").val() != message.Owner) {
-            updateNotificationCount();
-            addNotification(message);
+            //debugger;
+            // Create a function that the hub can call to broadcast messages.
+            notifications.client.updateMessages = function (message) {
+                console.log("Server call backed!");
+                console.log(message);                   
+                isNotify = (message.Type == "CHAT" && message.Owner != $("#currentUser").val())  
+            
+                || (message.Type == "TODO" && message.To == "ALL") 
+                
+                || (message.Type == "TODO" && message.To == $("#currentUser").val())
+
+                || (message.Type == "NOTIFY" && message.To == "ALL" && message.Owner != $("#currentUser").val());
+            if (isNotify) {
+                         
+                getAllMessages();
+                updateNotificationCount();
+                addNotification(message);
             }
 
         };
@@ -238,10 +246,19 @@
     }
 
     function addNotification(message) {
-        url = "/task/index";
-        if (message.Type == "CHAT") { url = "/home/chat";}
-         
-        $('#notiContent').append($('<li><a href="'+url+'">' + message.Type + ":" + message.Owner + ' (' + message.Message + ') </a> </li>'));
+        
+		url = "/home/chat";
+		icon = "glyphicon glyphicon-comment";
+		owner = message.Owner;
+        if (message.Type == "TODO") { 
+			url = "/task/index";
+			owner = message.To;
+			icon = "glyphicon glyphicon-calendar";
+		}
+		if (message.Type == "NOTIFY") { 
+			 icon = "glyphicon glyphicon-info-sign";
+		}
+        $('#notiContent').prepend($('<li><a href="'+url+'"><i class="icon '+icon+'"></i><span>:' +message.Message + ' (' +  owner + ')</span> </a> </li>'));
         
     }
     function updateNotification() {
