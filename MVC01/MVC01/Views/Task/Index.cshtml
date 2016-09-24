@@ -27,6 +27,9 @@
         <th>
             @Html.DisplayNameFor(model => model.isRepeat)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssigneeId)
+        </th>
         <th></th>
     </tr>
 
@@ -55,6 +58,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.isRepeat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Assignee)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ReminderTaskId }) |

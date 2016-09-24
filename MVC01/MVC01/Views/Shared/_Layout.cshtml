@@ -111,7 +111,7 @@
     </footer>
     <div id="searchresult" class="container" style="display:none;">
         <table id="result" class="table table-bordered"> 
-        <thead> <tr> <th>#</th><th>Album</th><th>Title</th> <th>Price</th>  </tr> </thead> 
+        <thead> <tr> <th>#</th><th>Title</th><th>Price</th><th>Cover</th></tr> </thead> 
         <tbody> 
             
         </tbody> 
@@ -128,34 +128,33 @@
 
     $(function () {
         console.log('jquery load successull!')
-        $('#searchbox').keyup(function (key) {
-            console.log($('#searchbox').val());
-            console.log(key.keyCode);
+        $('#searchbox').keyup(function (key) {			 
+            //console.log($('#searchbox').val());
+            //console.log(key.keyCode);
+			if(!$('#searchbox').val()){
+				$('#maincontent').css('display', 'block');
+				$('#searchresult').css('display', 'none');
+			}
             switch (key.keyCode) {
                 case 13,16, 17, 18,27,32, 93:                     
                     break;
                 default: {
                     $.ajax({
-                        url: 'api/Restful/Search?key=' + $('#searchbox').val()
-
+                        url: '/api/Restful/Search?key=' + $.trim($('#searchbox').val())
                     }).done(function (data) {
                         $("#result> tbody").children().remove();
                         if (console && console.log && (data.length > 0)) {
                             $.each(data, function (key, value) {
-                                console.log("detail of data :", value);
+                                //console.log("detail of data :", value);
                                 $("#result> tbody").append("<tr>")
                                     .append("<td>" + value.AlbumId + "</td>")
-                                     .append("<td><a href='/StoreManager/Details/" + value.AlbumId + "' > " + value.Title + "</a></td>")
-                                     .append("<td>" + value.Price + "</td>")
-                                    .append("<td><img src='" + value.AlbumArtUrl + "'/></td>")
-                                   
-                                   
+                                    .append("<td><a href='/StoreManager/Details/" + value.AlbumId + "' > " + value.Title + "</a></td>")
+                                    .append("<td>" + value.Price + "</td>")
+                                    .append("<td><img src='" + value.AlbumArtUrl + "'/></td>")                                                                 
                                     .append("</tr>");
                             });
-
                             $('#maincontent').css('display', 'none');
                             $('#searchresult').css('display', 'block');
-
                         }
                     });
 
@@ -184,12 +183,13 @@
 
         //debugger;
         // Create a function that the hub can call to broadcast messages.
-        notifications.client.updateMessages = function (id, message) {
-            console.log("Server call backed");
+        notifications.client.updateMessages = function (message) {
+            console.log("Server call backed!");
+            console.log(message);
             getAllMessages();
-            if ($("#currentUser").val() != id) { 
+            if ($("#currentUser").val() != message.Owner) {
             updateNotificationCount();
-            addNotification(id, message);
+            addNotification(message);
             }
 
         };
@@ -231,16 +231,17 @@
             type: 'GET',
             dataType: 'json'
         }).success(function (result) {
-            console.log("ajax finish " + result);
+            console.log(result);
         }).error(function () {
 
         });
     }
 
-    function addNotification(id, message) {
-        
+    function addNotification(message) {
+        url = "/task/index";
+        if (message.Type == "CHAT") { url = "/home/chat";}
          
-        $('#notiContent').append($('<li><a href="/home/chat">New contact : ' + id + ' (' + message + ') </a> </li>'));
+        $('#notiContent').append($('<li><a href="'+url+'">' + message.Type + ":" + message.Owner + ' (' + message.Message + ') </a> </li>'));
         
     }
     function updateNotification() {

@@ -15,7 +15,7 @@ namespace MVC01.Services
     {
         MusicStoreEntities db = MusicStoreEntities.Instance();
         // GET: api/Restful
-         
+        MessagesEntities mDb = MessagesEntities.Instance();
         public JsonResult<List<Album>> Get()
         {
             
@@ -70,11 +70,12 @@ namespace MVC01.Services
         {
         }
 
+        // GET: api/GetMessages/
         [HttpGet]
-        public JsonResult<ApplicationUser> GetMessages()
+        public JsonResult<List<Messages>> GetMessages()
         {
             
-            return Json(new ApplicationUser());
+            return Json(mDb.Messages.ToList());
         }
     }
 }

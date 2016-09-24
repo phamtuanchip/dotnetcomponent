@@ -81,6 +81,20 @@
             </div>
         </div>
             -->
+         
+            <div class="form-group">
+                @Html.LabelFor(model => model.AssigneeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.DropDownList("Assignee", String.Empty) 
+                        @Html.ValidationMessageFor(model => model.Remided, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            
+           
+           
         
                 @Html.EditorFor(model => model.TaskOwner, new { htmlAttributes = new { @type = "hidden", @Value = @User.Identity.GetUserName() } })
                

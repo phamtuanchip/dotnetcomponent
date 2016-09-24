@@ -83,7 +83,7 @@ namespace MVC01.Controllers
                 case SignInStatus.Success:
                     {
                         //inject broadcast message
-                        MessagesHub.SendMessages(model.Email, " has Online!");
+                       MessagesHub.SendMessages(new Messages(Messages.NOTIFY, model.Email, "is Online!"));
                        // ReminderJobScheduler.Start();
                         return RedirectToLocal(returnUrl);
                     }

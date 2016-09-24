@@ -28,7 +28,7 @@ namespace MVC01.Shedule
           
            List<ReminderTask> remider=  db.Tasks.Where(a => a.RemindDate.Equals(DateTime.Today) && a.isRemind == true && a.Remided == false).ToList();
             foreach(ReminderTask r in remider) { 
-                MessagesHub.SendMessages("For: "+ r.TaskOwner, r.Title);
+                MessagesHub.SendMessages(new Messages(Messages.TODO,r.Title, r.Assignee));
                 r.Remided = !r.isRepeat;
                 db.Entry(r).State = EntityState.Modified;                
             }

@@ -27,8 +27,10 @@ namespace MVC01.Models
         public ReminderTask() {
             GeoLocaltion = new GeoLocaltion();
         }
-         public string TaskOwner { get; set; }
-         public bool isRepeat { get; set; }
+        public int AssigneeId { get; set; }
+        public string  Assignee { get; set; }
+        public string TaskOwner { get; set; }
+        public bool isRepeat { get; set; }
 }
     
 }

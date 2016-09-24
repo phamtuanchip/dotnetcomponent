@@ -13,8 +13,7 @@ namespace MVC01.Controllers
         // GET: Task
         public ActionResult Index()
         {
-            
-
+           
             return View(db.Tasks.OrderBy(a=> a.RemindDate).ToList());
         }
 
@@ -33,6 +32,10 @@ namespace MVC01.Controllers
         // GET: Task/Add
         public ActionResult Add()
         {
+
+            List<ApplicationUser> users = ApplicationDbContext.Create().Users.ToList();
+
+            ViewBag.Assignee = new SelectList(users, "UserName", "UserName");
             return View();
         }
         // POST: Task/Add
@@ -52,6 +55,8 @@ namespace MVC01.Controllers
                     return View();
                 }
             }
+            List<ApplicationUser> users = ApplicationDbContext.Create().Users.ToList();
+            ViewBag.Assignee = new SelectList(users, "UserName", "UserName");
             return View();
         }
 

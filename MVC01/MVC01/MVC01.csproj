@@ -248,6 +248,7 @@
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\MessagesHub.cs" />
+    <Compile Include="Models\MessagesEntities.cs" />
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\MessagesRepository.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
