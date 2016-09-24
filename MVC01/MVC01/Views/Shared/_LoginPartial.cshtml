@@ -1,18 +1,24 @@
 ﻿@using Microsoft.AspNet.Identity
+@using MVC01.Utils
+
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="login nav navbar-nav navbar-right">
        
         <li>
-           
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            <input type="hidden" id="currentUser" value="@User.Identity.GetUserName()"  />  
+           <a href="/Manage" title="@User.Identity.GetUserName()">
+		    <img class="image"  src="http://www.gravatar.com/avatar/@MD5Helper.HashEmailForGravatar(@User.Identity.GetUserName())"/>
+             
+            </a>
+			<input type="hidden" id="currentUser" value="@User.Identity.GetUserName()"  />  
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a class="image glyphicon glyphicon-off"  href="javascript:document.getElementById('logoutForm').submit()" title="log off"></a></li>
     </ul>
     }
 }

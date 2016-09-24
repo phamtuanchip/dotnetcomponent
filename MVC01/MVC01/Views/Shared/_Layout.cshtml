@@ -7,10 +7,9 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />   
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+    <script src="/Content/Chat/js/md5.min.js"></script>
     <style type="text/css">
-        /*Added css for design notification area, you can design by your self*/
-        /* COPY css content from youtube video description*/
+         
         .noti-content {
             position: fixed;
             left: 130px;
@@ -27,7 +26,7 @@
             overflow: auto;
             padding: 0px;
             margin: 0px;
-            padding-left: 20px;
+             
             z-index: 3;
         }
 
@@ -35,8 +34,16 @@
                 margin: 3px;
                 padding: 6px;
                 background: #fff;
+				 
             }
-
+			ul#notiContent li a{
+                margin: 3px;
+                padding: 6px;
+                background: #fff;
+				 
+				  font-family: arial, sans-serif;
+				  font-size: 12px;
+            }
         .noti-top-arrow {
             border-color: transparent;
             border-bottom-color: #F5DEB3;
@@ -49,17 +56,36 @@
 
         span.noti {
             color: #FF2323;
-            margin: 10px;
+            margin: 18px 10px;
             position: fixed;
             left: 150px;
-            font-size: 18px;
+            
             cursor: pointer;
         }
 
         span.count {
             position: relative;
             top: -3px;
+			font-size: 14px;
         }
+		.login a {
+			line-height:30px;
+			margin:0px;
+			padding:0px;
+		}
+		.image {
+				  display: block;
+				   
+				  order: 1;
+				  margin: 0 10px 0 0;
+				  height: 30px;
+				  width: 30px;
+				  font-size : 2em;
+				  border-radius: 50%;
+				  box-sizing: border-box;
+				  -webkit-touch-callout: none;
+				  -webkit-user-select: none;
+				}
     </style>
 </head>
 <body>        
@@ -96,9 +122,9 @@
                     <li >
                         <input id="searchbox" type="text" class="form-control" placeholder="Search" >
                    </li>
-                   
+                  
                 </ul>
-                @Html.Partial("_LoginPartial")
+                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -250,15 +276,21 @@
 		url = "/home/chat";
 		icon = "glyphicon glyphicon-comment";
 		owner = message.Owner;
+		content= "";
         if (message.Type == "TODO") { 
 			url = "/task/index";
 			owner = message.To;
 			icon = "glyphicon glyphicon-calendar";
+			content = '<li><a href="'+url+'"><i class="icon '+icon+'"></i><span>:' +message.Message + ' (' +  owner + ')</span> </a> </li>';
 		}
 		if (message.Type == "NOTIFY") { 
 			 icon = "glyphicon glyphicon-info-sign";
+			 content = '<li><a href="'+url+'"><i class="icon '+icon+'"></i><span>:' +owner + ' (' +  message.Message + ')</span> </a> </li>';
 		}
-        $('#notiContent').prepend($('<li><a href="'+url+'"><i class="icon '+icon+'"></i><span>:' +message.Message + ' (' +  owner + ')</span> </a> </li>'));
+		if (message.Type == "CHAT") { 
+			content = '<li><a href="'+url+'"><i class="icon '+icon+'"></i><span>:' +owner + ' :' +  message.Message + '</span> </a> </li>'; 
+		}
+        $('#notiContent').prepend(content);
         
     }
     function updateNotification() {
