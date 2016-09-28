@@ -11,7 +11,6 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\roslyn\System.Reflection.Metadata.dl
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\roslyn\vbc.exe
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\roslyn\VBCSCompiler.exe
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\roslyn\VBCSCompiler.exe.config
-D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.dll.config
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\MVC01.pdb
 D:\projects\dotnetcomponent\MVC01\MVC01\bin\Antlr3.Runtime.dll
@@ -103,3 +102,9 @@ D:\projects\dotnetcomponent\MVC01\MVC01\bin\Microsoft.Owin.Security.MicrosoftAcc
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.csprojResolveAssemblyReference.cache
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.dll
 D:\projects\dotnetcomponent\MVC01\MVC01\obj\Debug\MVC01.pdb
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\mscorlib.dll
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\normidna.nlp
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\normnfc.nlp
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\normnfd.nlp
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\normnfkc.nlp
+D:\projects\dotnetcomponent\MVC01\MVC01\bin\normnfkd.nlp
