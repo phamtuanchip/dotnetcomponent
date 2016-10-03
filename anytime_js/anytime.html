@@ -68,7 +68,7 @@ Frequance report
 	var rangeDemoFormat = "%m-%d-%Y";
 	var formater = "%W, %M %D in the Year %z %E";
 	var rangeDemoConv = new AnyTime.Converter({format:rangeDemoFormat});
-
+	var selectedDays = [];
 	$("#rangeDemoStart").AnyTime_picker({format:rangeDemoFormat})
 	.change(function(e) {
 	//Calculate and limited day for until
@@ -87,16 +87,30 @@ Frequance report
 					format: rangeDemoFormat,
 					latest: thirdtyDaysLater
 					}).change(function(e) {
-						calculate(fromDay, thirdtyDaysLater, {});
+						s
+						//console.log(selectedDays);
+						 	var begin_range = $("#span-begin table").find(".ui-state-default");
+							var end_range = $("#span-end table").find(".ui-state-default");
+							var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
+							var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+							while (selected_begin <= selected_end ){
+								selected.push(selected_begin);
+								selected_begin += oneDay;
+							}
+							electedDays = calculate(selected_begin, selected_end, electedDays);
 					});
 
 					$("#rangeDemoRange").AnyTime_noPicker().AnyTime_picker({format:rangeDemoFormat,earliest: dayLater,  placement: "inline", hideInput: true})
 					.change(function(e) {
-						var selectedMoth = $("#span-begin ul.AnyTime-mons").find("li.ui-state-highlight");
+						
 						console.log(selectedMoth.html());
 					    var begin_range = $("#span-begin table").find(".AnyTime-cur-rank");
+						$(selectedDays).each(function(key, value){
+							//console.log(new Date(value));
+						});
 						begin_range.each(function(key, value) {
-						  $(value).toggleClass("AnyTime-cur-rank");
+						  
+						  //$(value).toggleClass("AnyTime-cur-rank");
 						});
 					});
 					
@@ -106,25 +120,28 @@ Frequance report
 			}			
 	});
 
-	function calculate(fromDate, toDate, selected) {
+	function calculate(selected_begin, selected_end, selected) {
 		//Hiligheted the begin
-		var begin_range = $("#span-begin table").find(".ui-state-default");
-		var end_range = $("#span-end table").find(".ui-state-default");
-		var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
-		var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+	
 		var date_begin = new Date(selected_begin +0) ;
 		var date_end = new Date(selected_end +0) ;
 		//clear hiligherd class
-
+		var selectedMoth = $("#span-begin ul.AnyTime-mons").find("li.ui-state-highlight");
+		
 		begin_range.each(function(key, value) {
 			$(value).removeClass("AnyTime-cur-rank");
 		});
 		begin_range.each(function(key, value) {
+			if(selected.size() > 0 ) {
+			
+			}
 			if($(value).html() >= date_begin.getDate() && $(value).html() < date_end.getDate() && !$(value).hasClass("ui-state-disabled")) {
 			console.log($(value).hasClass("ui-state-disabled"));
 			$(value).addClass("AnyTime-cur-rank");
 			}
 		});
+		
+		return selected;
 
 	}
 
