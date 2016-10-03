@@ -1,0 +1,136 @@
+<html>
+<head>
+	<title>Anytime js</title>
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+-->
+<link href="anytime.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-1.9.1.js"></script>
+<script src="jquery-migrate.js"></script>
+<script src="anytime.js"></script>
+<script src="anytimetz.js"></script>
+</style>
+</head>
+<body>
+
+
+<style>
+#rangeDemoStart, #rangeDemoFinish {
+
+background-position:right center;
+background-repeat:no-repeat; }
+.AnyTime-cur-rank{
+background-color: #ab6363 !important;
+}
+
+</style>
+<div  style="float:left;">
+Start: <input type="text" id="rangeDemoStart" size="14" value="10-03-2016" />
+Until: <input type="text" id="rangeDemoFinish" size="14" />
+</div>
+<div style=" margin-left: 500px; position:fixed;">
+<span style="float:left;" id="span-begin" >
+<input type="text" id="rangeDemoRange" size="14" />
+</span>
+</div>
+<div style="clear:both;"></div>
+
+<div>
+<input type="checkbox" id="weekend" /> Include weekend and public & holiday
+</div>
+
+
+<div>
+Frequance report
+<select>
+<option>Daily</option>
+</select>
+</div>
+
+
+
+
+</body>
+
+
+
+<script>
+	var oneDay = 24*60*60*1000;
+	var rangeDemoFormat = "%m-%d-%Y";
+	var formater = "%W, %M %D in the Year %z %E";
+	var rangeDemoConv = new AnyTime.Converter({format:rangeDemoFormat});
+
+	$("#rangeDemoStart").AnyTime_picker({format:rangeDemoFormat})
+	.change(function(e) {
+	//Calculate and limited day for until
+
+		var fromDay = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
+		var dayLater = new Date(fromDay+oneDay);
+		dayLater.setHours(0,0,0,0);
+
+		var thirdtyDaysLater = new Date(fromDay+(30*oneDay));
+		thirdtyDaysLater.setHours(23,59,59,999);
+		
+			try {
+				$("#rangeDemoFinish").AnyTime_noPicker().AnyTime_picker(
+				{
+					earliest: dayLater,
+					format: rangeDemoFormat,
+					latest: thirdtyDaysLater
+					}).change(function(e) {
+						calculate(fromDay, thirdtyDaysLater, {});
+					});
+
+					$("#rangeDemoRange").AnyTime_noPicker().AnyTime_picker({format:rangeDemoFormat,earliest: dayLater,  placement: "inline", hideInput: true})
+					.change(function(e) {
+						var selectedMoth = $("#span-begin ul.AnyTime-mons").find("li.ui-state-highlight");
+						console.log(selectedMoth.html());
+					    var begin_range = $("#span-begin table").find(".AnyTime-cur-rank");
+						begin_range.each(function(key, value) {
+						  $(value).toggleClass("AnyTime-cur-rank");
+						});
+					});
+					
+			} catch (e) {
+				console.log(e);
+				
+			}			
+	});
+
+	function calculate(fromDate, toDate, selected) {
+		//Hiligheted the begin
+		var begin_range = $("#span-begin table").find(".ui-state-default");
+		var end_range = $("#span-end table").find(".ui-state-default");
+		var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
+		var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+		var date_begin = new Date(selected_begin +0) ;
+		var date_end = new Date(selected_end +0) ;
+		//clear hiligherd class
+
+		begin_range.each(function(key, value) {
+			$(value).removeClass("AnyTime-cur-rank");
+		});
+		begin_range.each(function(key, value) {
+			if($(value).html() >= date_begin.getDate() && $(value).html() < date_end.getDate() && !$(value).hasClass("ui-state-disabled")) {
+			console.log($(value).hasClass("ui-state-disabled"));
+			$(value).addClass("AnyTime-cur-rank");
+			}
+		});
+
+	}
+
+	$(document).ready(function() {
+	//Anytime.picker("test");
+
+	});
+</script>
+</html>

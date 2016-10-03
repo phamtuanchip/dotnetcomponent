@@ -35,5 +35,10 @@ namespace MVC01.Controllers
 
             return View();
         }
+
+        public ActionResult Poc()
+        {
+            return View();
+        }
     }
 }
