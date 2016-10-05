@@ -161,16 +161,18 @@ Frequance report
 					earliest: v
 					,format: rangeDemoFormat
 					,latest: y
-					
+					//,placement: "inline"
 	});
 	$("#rangeDay").AnyTime_picker(
 	{
 		format:rangeDemoFormat
 		,placement: "inline"
 		,hideInput: false
-		 
+		 ,earliest: v
+					 
+		,latest: y
 	});	
-	 $("#AnyTime--Day").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	 $("#AnyTime--Day").on("click", ".AnyTime-wk > td:not(.ui-state-disabled)", function (e) {
         if (!$(this).closest(".calendarView").length) {
 		    //console.log(e);
 			 //var start = $("#AnyTime--Day");
@@ -180,7 +182,7 @@ Frequance report
     });
 	
 	
-	$("#AnyTime--UntilDay").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	$("#AnyTime--UntilDay").on("click", ".AnyTime-wk > td:not(.ui-state-disabled)", function (e) {
         if (!$(this).closest(".calendarView").length) {
 		    
 			 var start = $("#Day").val();
@@ -208,52 +210,76 @@ Frequance report
 			  }
 			  startMin += oneDay;
 			 }
-			 console.log(selectedDays.keys);	 
-			 var selectedMonth = $("#AnyTime--rangeDay").find(".AnyTime-mons >li ");
-			  
-			  var month = 0;
-			  		 
-				selectedMonth.each(function (index, value){
+			 
+			//do the hilight			 
+			 var selectedMonth = $("#AnyTime--rangeDay").find(".AnyTime-mons >li ");			  
+			 var month = 0;
+			 selectedMonth.each(function (index, value){
 						if($(value).hasClass("ui-state-highlight"))
 						month = index +1
 						 
-				});
-			   
-			 var hilighable = $("#AnyTime--rangeDay").find(".AnyTime-wk > td:not(.ui-state-disabled)");			  
-			 hilighable.removeClass("AnyTime-cur-range");
-			  
-			hilighable.each(function (index, value){
+			 });
+			   var clear = $("#AnyTime--rangeDay").find(".AnyTime-wk > .AnyTime-cur-range");			    
+				clear.removeClass("AnyTime-cur-range");
 				
+			var hilighable = $("#AnyTime--rangeDay").find(".AnyTime-wk > td:not(.ui-state-disabled)"); 
+			   
+			hilighable.each(function (index, value){
+				 
 				selectedDays.values.forEach(function (val) {
 					   var hightlitedDate = new Date(val).getDate();
 					   var hightlitedMonth = new Date(val).getMonth();
 					  
 					  
 					   if(month == (hightlitedMonth +1) && $(value).html() == hightlitedDate)  {
+					     console.log("catch here");
 						 $(value).addClass("AnyTime-cur-range");
 						  
 					   }  
 						
+					    
+						
 					  
-				 });
+				});
 					  
 			});
-			
+			//update hidden input
+			$(".rangeDemo").html("");
+			selectedDays.keys.forEach(function (day) {
+				var input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 
+				 $(".rangeDemo").append(input); 
+			}) ;
             $(this).closest(".AnyTime-pkr").hide();
         }   
     });
 	
 	
-	$("#AnyTime--rangeDay").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	$("#AnyTime--rangeDay").on("click", ".AnyTime-wk > td:not(.ui-state-disabled)", function (e) {
         
+			$("#UntilDay").val("");
 			var selected = $("#rangeDay").val();
+			  var isWeekend = $("#weekend").prop('checked');
+			 var holy = $("#holiday").val().split(",");
 			 
 			var selectedMin = rangeConv.parse(selected).getTime();
+			 
 			
 			if(!selectedDays.get(selected)) {
-				selectedDays.set(selected, selectedMin);
+				if(isWeekend){
+					var dow = new Date(selectedMin).getDay();				  
+				   
+				   if(dow != 0 && dow != 6 && holy.indexOf(selected) ==-1){
+						selectedDays.set(selected, selectedMin);
+						$(e.target).toggleClass("AnyTime-cur-range"); 
+				   }
+				} else {
+					selectedDays.set(selected, selectedMin);
+					$(e.target).toggleClass("AnyTime-cur-range"); 
+				}
+				
 			} else {
 				selectedDays.delete(selected);
+				$(e.target).toggleClass("AnyTime-cur-range"); 
 			}
 		    
 			$("#rangeDay").val(selectedDays.keys);
@@ -263,14 +289,63 @@ Frequance report
 				var input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 
 				 $(".rangeDemo").append(input); 
 			}) ;
-			
-			$(e.target).toggleClass("AnyTime-cur-range"); 
+			 
+		
            
         
     });
 	
 	
-         
+     $("#AnyTime--rangeDay").on("click", ".AnyTime-mons > li:not(.ui-state-disabled)", function (e) {
+        
+			 
+		 
+			 var isWeekend = $("#weekend").prop('checked');
+			 var holy = $("#holiday").val().split(",");
+			 
+			//do the hilight			 
+			 var selectedMonth = $("#AnyTime--rangeDay").find(".AnyTime-mons >li ");			  
+			 var month = 0;
+			 selectedMonth.each(function (index, value){
+						if($(value).hasClass("ui-state-highlight"))
+						month = index +1
+						 
+			 });
+			 
+			 var clear = $("#AnyTime--rangeDay").find(".AnyTime-wk > .AnyTime-cur-range");			    
+			 clear.removeClass("AnyTime-cur-range");
+			 
+			var hilighable = $("#AnyTime--rangeDay").find(".AnyTime-wk > td:not(.ui-state-disabled)");			  
+			
+			  
+			  
+			hilighable.each(function (index, value){
+				$(value).addClass("ui-state-disabled"); 
+				selectedDays.values.forEach(function (val) {
+					   var hightlitedDate = new Date(val).getDate();
+					   var hightlitedMonth = new Date(val).getMonth();	  
+					  
+					   if(month == (hightlitedMonth +1) && $(value).html() == hightlitedDate)  {
+						 $(value).addClass("AnyTime-cur-range");
+						  
+					   }  
+						
+					    
+						
+					  
+				});
+					  
+			});
+			//update hidden input
+			$(".rangeDemo").html("");
+			selectedDays.keys.forEach(function (day) {
+				var input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 
+				 $(".rangeDemo").append(input); 
+			}) ;
+		
+           
+        
+    });   
        
         
 	/*
