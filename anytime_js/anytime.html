@@ -178,12 +178,10 @@ Frequance report
 					   var hightlitedDate = new Date(val).getDate();
 					   var hightlitedMonth = new Date(val).getMonth();					  
 					   if(month == (hightlitedMonth +1) && $(value).html() == hightlitedDate)  {					     
-						if(isWeekend){
-						   
+						if(isWeekend){						   
 						   var dow = new Date(val).getDay();
 						   var key = rangeConv.format(new Date(val));
-						   if(dow != 0 && dow != 6 && holy.indexOf(key) ==-1){
-						     console.log(key);
+						   if(dow != 0 && dow != 6 && holy.indexOf(key) ==-1){						     
 							 $(value).addClass("AnyTime-cur-range");						  							
 						   }  
 						} else  
@@ -206,12 +204,12 @@ Frequance report
 			 selectedDays.clear();
 			 var isWeekend = $("#weekend").prop('checked');
 			 var holy = $("#holiday").val().split(",");
-			 //console.log(holy);
+			 
 			 while( startMin <= endMin ){
 			  var cur = rangeConv.format(new Date(startMin));
 			  if(isWeekend) {
 				 var dow = new Date(startMin).getDay();				  
-				  //console.log(cur);
+				  
 				   if(dow != 0 && dow != 6 && holy.indexOf(cur) ==-1){
 					selectedDays.set(cur, startMin);
 				   }
