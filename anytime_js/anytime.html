@@ -24,31 +24,36 @@
 
 
 <style>
-#rangeDemoStart, #rangeDemoFinish {
+#Day, #UntilDay {
 
 background-position:right center;
 background-repeat:no-repeat; }
-.AnyTime-cur-rank{
+.AnyTime-cur-range{
 background-color: #ab6363 !important;
 }
 
 </style>
 <div  style="float:left;">
-Start: <input type="text" id="rangeDemoStart" size="14" />
-Until: <input type="text" id="rangeDemoFinish" size="14" />
+Start: <input type="text" id="Day" size="14" value="10-06-2016" />
+Until: <input type="text" id="UntilDay" size="14" value="10-07-2016" />
 </div>
 <div style=" margin-left: 500px; position:fixed;">
-<span style="float:left;" id="span-begin" >
-<input type="text" id="rangeDemoRange" size="14" />
+<span  style="float:left;" id="span-begin" >
+<input type="text" id="rangeDay" size="140" />
 </span>
+<div class="rangeDemo"></div>
 </div>
 <div style="clear:both;"></div>
 
 <div>
-<input type="checkbox" id="weekend" /> Include weekend and public & holiday
+<input type="checkbox" id="weekend" checked /> Include weekend and public & holiday
+</div>
+<div>
+<input type="text" id="holiday" value="10-11-2016,10-19-2016"/>
+
 </div>
 
-<input type="text" id="rangeDemoRange2" size="14" class="datepicker" />
+ 
 
 
 <div>
@@ -69,8 +74,68 @@ Frequance report
 	var oneDay = 24*60*60*1000;
 	var rangeDemoFormat = "%m-%d-%Y";
 	var formater = "%W, %M %D in the Year %z %E";
-	var rangeDemoConv = new AnyTime.Converter({format:rangeDemoFormat});
-	var selectedDays = $.unique([]);	
+	var rangeConv = new AnyTime.Converter({format:rangeDemoFormat});
+	
+	
+	var Dict = (function(){
+    // IE 8 and earlier has no Array.prototype.indexOf
+		function indexOfPolyfill(val) {
+		  for (var i = 0, l = this.length; i < l; ++i) {
+			if (this[i] === val) {
+			  return i;
+			}
+		  }
+		  return -1;
+		}
+
+		function Dict(){
+		  this.keys = [];
+		  this.values = [];
+		  if (!this.keys.indexOf) {
+			this.keys.indexOf = indexOfPolyfill;
+		  }
+		};
+
+		Dict.prototype.has = function(key){
+		  return this.keys.indexOf(key) != -1;
+		};
+
+		Dict.prototype.get = function(key, defaultValue){
+		  var index = this.keys.indexOf(key);
+		  return index == -1 ? defaultValue : this.values[index];
+		};
+
+		Dict.prototype.set = function(key, value){
+		  var index = this.keys.indexOf(key);
+		  if (index == -1) {
+			this.keys.push(key);
+			this.values.push(value);
+		  } else {
+			var prevValue = this.values[index];
+			this.values[index] = value;
+			return prevValue;
+		  }
+		};
+
+		Dict.prototype.delete = function(key){
+		  var index = this.keys.indexOf(key);
+		  if (index != -1) {
+			this.keys.splice(index, 1);
+			return this.values.splice(index, 1)[0];
+		  }
+		};
+
+		Dict.prototype.clear = function(){
+		  this.keys.splice(0, this.keys.length);
+		  this.values.splice(0, this.values.length);
+		};
+
+		return Dict;
+	})();
+
+	
+	var selectedDays = new Dict();
+	
 	function thirdtyDays(fromDate) {
 			var thirdtyDaysLater = new Date(fromDate+(30*oneDay));
 			thirdtyDaysLater.setHours(23,59,59,999);
@@ -82,8 +147,8 @@ Frequance report
 		return dayLater;
 	}
 	
-	
-  var dpicker =	$("#rangeDemoStart").AnyTime_picker({
+	  
+  var dpicker =	$("#Day").AnyTime_picker({
 		format:rangeDemoFormat
 		 
 	});
@@ -91,51 +156,129 @@ Frequance report
 	 
 	 var v = oneDays(new Date().getTime());
 	 var y = thirdtyDays(new Date().getTime());
-	$("#rangeDemoFinish").AnyTime_noPicker().AnyTime_picker(
+	$("#UntilDay").AnyTime_noPicker().AnyTime_picker(
 	{
 					earliest: v
 					,format: rangeDemoFormat
 					,latest: y
 					
 	});
-	$("#rangeDemoRange").AnyTime_picker(
+	$("#rangeDay").AnyTime_picker(
 	{
 		format:rangeDemoFormat
 		,placement: "inline"
 		,hideInput: false
-		,isMultiple: true
-		,values: selectedDays
+		 
 	});	
-	 $("#AnyTime--rangeDemoStart").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	 $("#AnyTime--Day").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
         if (!$(this).closest(".calendarView").length) {
 		    //console.log(e);
-			 
+			 //var start = $("#AnyTime--Day");
+			 //selectedDays.push(rangeConv.parse(start).getTime()); 
             $(this).closest(".AnyTime-pkr").hide();
         }   
     });
 	
 	
-	$("#AnyTime--rangeDemoFinish").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	$("#AnyTime--UntilDay").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
         if (!$(this).closest(".calendarView").length) {
-		    console.log(e);
+		    
+			 var start = $("#Day").val();
+			 var startMin = rangeConv.parse(start).getTime();
+			 var end = $("#UntilDay").val();
+			 var endMin = rangeConv.parse(end).getTime();
+			 var dayLater = oneDays(startMin);
+			 var thirdtyDaysLater = thirdtyDays(startMin);
+			 selectedDays.clear();
+			 var isWeekend = $("#weekend").prop('checked');
+			 var holy = $("#holiday").val().split(",");
+			 console.log(holy);
+			 while( startMin <= endMin ){
+			  var cur = rangeConv.format(new Date(startMin));
+			  if(isWeekend) {
+				 var dow = new Date(startMin).getDay();				  
+				  //console.log(cur);
+				   if(dow != 0 && dow != 6 && holy.indexOf(cur) ==-1){
+					selectedDays.set(cur, startMin);
+				   }
+				    
+				   
+			  } else {
+				selectedDays.set(cur, startMin);
+			  }
+			  startMin += oneDay;
+			 }
+			 console.log(selectedDays.keys);	 
+			 var selectedMonth = $("#AnyTime--rangeDay").find(".AnyTime-mons >li ");
+			  
+			  var month = 0;
+			  		 
+				selectedMonth.each(function (index, value){
+						if($(value).hasClass("ui-state-highlight"))
+						month = index +1
+						 
+				});
+			   
+			 var hilighable = $("#AnyTime--rangeDay").find(".AnyTime-wk > td:not(.ui-state-disabled)");			  
+			 hilighable.removeClass("AnyTime-cur-range");
+			  
+			hilighable.each(function (index, value){
+				
+				selectedDays.values.forEach(function (val) {
+					   var hightlitedDate = new Date(val).getDate();
+					   var hightlitedMonth = new Date(val).getMonth();
+					  
+					  
+					   if(month == (hightlitedMonth +1) && $(value).html() == hightlitedDate)  {
+						 $(value).addClass("AnyTime-cur-range");
+						  
+					   }  
+						
+					  
+				 });
+					  
+			});
+			
             $(this).closest(".AnyTime-pkr").hide();
         }   
     });
 	
 	
-	$("#AnyTime--rangeDemoRange").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+	$("#AnyTime--rangeDay").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
         
-		    console.log($("#rangeDemoRange").val());
-            //$(this).closest(".AnyTime-pkr").hide();
+			var selected = $("#rangeDay").val();
+			 
+			var selectedMin = rangeConv.parse(selected).getTime();
+			
+			if(!selectedDays.get(selected)) {
+				selectedDays.set(selected, selectedMin);
+			} else {
+				selectedDays.delete(selected);
+			}
+		    
+			$("#rangeDay").val(selectedDays.keys);
+			$(".rangeDemo").html("");
+			
+			selectedDays.keys.forEach(function (day) {
+				var input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 
+				 $(".rangeDemo").append(input); 
+			}) ;
+			
+			$(e.target).toggleClass("AnyTime-cur-range"); 
+           
         
     });
 	
+	
+         
+       
+        
 	/*
-	$("#rangeDemoStart").AnyTime_noPicker().AnyTime_picker({
+	$("#Day").AnyTime_noPicker().AnyTime_picker({
 		format:rangeDemoFormat		
 	}).change(function(e) {
 	//Calculate and limited day for until
-			var fromDay = rangeDemoConv.parse($(e.target).val()).getTime();
+			var fromDay = rangeConv.parse($(e.target).val()).getTime();
 			var dayLater = new Date(fromDay+oneDay);
 			dayLater.setHours(0,0,0,0);
 
@@ -143,7 +286,7 @@ Frequance report
 			thirdtyDaysLater.setHours(23,59,59,999);
 		
 			try {
-				$("#rangeDemoFinish").AnyTime_noPicker().AnyTime_picker(
+				$("#UntilDay").AnyTime_noPicker().AnyTime_picker(
 				{
 					earliest: dayLater
 					,format: rangeDemoFormat
@@ -152,12 +295,12 @@ Frequance report
 				}).change(function(e) {
 						 
 					 
-							var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
+							var selected_begin = rangeConv.parse($("#Day").val()).getTime();
 							 
 							 selectedDays =[];
 							   try {
 								 
-									var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+									var selected_end = rangeConv.parse($("#UntilDay").val()).getTime();
 									
 									 
 									while (selected_begin <= selected_end ){
@@ -172,7 +315,7 @@ Frequance report
 							
 				});
 
-				$("#rangeDemoRange").AnyTime_noPicker().AnyTime_picker(
+				$("#rangeDay").AnyTime_noPicker().AnyTime_picker(
 				{
 					earliest: dayLater
 					,format: rangeDemoFormat
@@ -185,12 +328,12 @@ Frequance report
 				}).change(function(e) {
 						var begin_range = $("#span-begin table").find(".ui-state-default");
 							//var end_range = $("#span-end table").find(".ui-state-default");
-							var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
-							//var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+							var selected_begin = rangeConv.parse($("#Day").val()).getTime();
+							//var selected_end = rangeConv.parse($("#UntilDay").val()).getTime();
 						  
 					       try {
-							//if($("#rangeDemoFinish").val() != null && $("#rangeDemoFinish").val() != "") {
-								var selected_end = rangeDemoConv.parse($("#rangeDemoRange").val()).getTime();
+							//if($("#UntilDay").val() != null && $("#UntilDay").val() != "") {
+								var selected_end = rangeConv.parse($("#rangeDay").val()).getTime();
 								
 							 calculate(selected_begin, selected_end, selectedDays);
 							
