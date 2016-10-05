@@ -135,9 +135,21 @@ Frequance report
 	
 	var selectedDays = new Dict();
 	function renderInputs(dics){
+		var isWeekend = $("#weekend").prop('checked');
+		var holy = $("#holiday").val().split(",");	
+		
 		$(".rangeDemo").html("");
+			var input = "";
 			selectedDays.keys.forEach(function (day) {
-				var input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 
+			   if(isWeekend){
+						    
+						   var dow = new Date(day).getDay();
+						   if(dow != 0 && dow != 6 && holy.indexOf(day) ==-1){
+							  		 input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 				  							
+						   } else input = "";
+				} else  
+				  input = '<input type="text" name= "rangeValues" value="' + day + '"/>'; 		
+				
 				 $(".rangeDemo").append(input); 
 		}) ;
 	}
@@ -145,11 +157,16 @@ Frequance report
 	function renderHighlights(selectedDays){
 			 var selectedMonth = $("#AnyTime--rangeDay").find(".AnyTime-mons >li ");			  
 			 var month = 0;
+			 var isWeekend = $("#weekend").prop('checked');
+			  var holy = $("#holiday").val().split(",");
 			 selectedMonth.each(function (index, value){
 						if($(value).hasClass("ui-state-highlight"))
 						month = index +1
 						 
 			 });
+			 
+				 
+				
 			   var clear = $("#AnyTime--rangeDay").find(".AnyTime-wk > .AnyTime-cur-range");			    
 				clear.removeClass("AnyTime-cur-range");
 				
@@ -161,8 +178,17 @@ Frequance report
 					   var hightlitedDate = new Date(val).getDate();
 					   var hightlitedMonth = new Date(val).getMonth();					  
 					   if(month == (hightlitedMonth +1) && $(value).html() == hightlitedDate)  {					     
+						if(isWeekend){
+						   
+						   var dow = new Date(val).getDay();
+						   var key = rangeConv.format(new Date(val));
+						   if(dow != 0 && dow != 6 && holy.indexOf(key) ==-1){
+						     console.log(key);
+							 $(value).addClass("AnyTime-cur-range");						  							
+						   }  
+						} else  
 						 $(value).addClass("AnyTime-cur-range");						  
-					   }  
+					   } 
 						
 					  
 				});
@@ -322,7 +348,7 @@ Frequance report
 				selectedDays.delete(selected);
 				$(e.target).toggleClass("AnyTime-cur-range"); 
 			}
-		    
+		     renderHighlights(selectedDays);
 			renderInputs(selectedDays);
 			 
 		
