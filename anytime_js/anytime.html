@@ -34,7 +34,7 @@ background-color: #ab6363 !important;
 
 </style>
 <div  style="float:left;">
-Start: <input type="text" id="rangeDemoStart" size="14" value="10-03-2016" />
+Start: <input type="text" id="rangeDemoStart" size="14" />
 Until: <input type="text" id="rangeDemoFinish" size="14" />
 </div>
 <div style=" margin-left: 500px; position:fixed;">
@@ -47,6 +47,8 @@ Until: <input type="text" id="rangeDemoFinish" size="14" />
 <div>
 <input type="checkbox" id="weekend" /> Include weekend and public & holiday
 </div>
+
+<input type="text" id="rangeDemoRange2" size="14" class="datepicker" />
 
 
 <div>
@@ -68,58 +70,147 @@ Frequance report
 	var rangeDemoFormat = "%m-%d-%Y";
 	var formater = "%W, %M %D in the Year %z %E";
 	var rangeDemoConv = new AnyTime.Converter({format:rangeDemoFormat});
-	var selectedDays = [];
-	$("#rangeDemoStart").AnyTime_picker({format:rangeDemoFormat})
-	.change(function(e) {
-	//Calculate and limited day for until
-
-		var fromDay = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
-		var dayLater = new Date(fromDay+oneDay);
+	var selectedDays = $.unique([]);	
+	function thirdtyDays(fromDate) {
+			var thirdtyDaysLater = new Date(fromDate+(30*oneDay));
+			thirdtyDaysLater.setHours(23,59,59,999);
+			return thirdtyDaysLater;
+	}
+	function oneDays (fromDate) {
+		var dayLater = new Date(fromDate+oneDay);
 		dayLater.setHours(0,0,0,0);
+		return dayLater;
+	}
+	
+	
+  var dpicker =	$("#rangeDemoStart").AnyTime_picker({
+		format:rangeDemoFormat
+		 
+	});
+	 
+	 
+	 var v = oneDays(new Date().getTime());
+	 var y = thirdtyDays(new Date().getTime());
+	$("#rangeDemoFinish").AnyTime_noPicker().AnyTime_picker(
+	{
+					earliest: v
+					,format: rangeDemoFormat
+					,latest: y
+					
+	});
+	$("#rangeDemoRange").AnyTime_picker(
+	{
+		format:rangeDemoFormat
+		,placement: "inline"
+		,hideInput: false
+		,isMultiple: true
+		,values: selectedDays
+	});	
+	 $("#AnyTime--rangeDemoStart").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+        if (!$(this).closest(".calendarView").length) {
+		    //console.log(e);
+			 
+            $(this).closest(".AnyTime-pkr").hide();
+        }   
+    });
+	
+	
+	$("#AnyTime--rangeDemoFinish").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+        if (!$(this).closest(".calendarView").length) {
+		    console.log(e);
+            $(this).closest(".AnyTime-pkr").hide();
+        }   
+    });
+	
+	
+	$("#AnyTime--rangeDemoRange").on("click", ".AnyTime-wk > td:not(.AnyTime-dom-btn-empty)", function (e) {
+        
+		    console.log($("#rangeDemoRange").val());
+            //$(this).closest(".AnyTime-pkr").hide();
+        
+    });
+	
+	/*
+	$("#rangeDemoStart").AnyTime_noPicker().AnyTime_picker({
+		format:rangeDemoFormat		
+	}).change(function(e) {
+	//Calculate and limited day for until
+			var fromDay = rangeDemoConv.parse($(e.target).val()).getTime();
+			var dayLater = new Date(fromDay+oneDay);
+			dayLater.setHours(0,0,0,0);
 
-		var thirdtyDaysLater = new Date(fromDay+(30*oneDay));
-		thirdtyDaysLater.setHours(23,59,59,999);
+			var thirdtyDaysLater = new Date(fromDay+(30*oneDay));
+			thirdtyDaysLater.setHours(23,59,59,999);
 		
 			try {
 				$("#rangeDemoFinish").AnyTime_noPicker().AnyTime_picker(
 				{
-					earliest: dayLater,
-					format: rangeDemoFormat,
-					latest: thirdtyDaysLater
-					}).change(function(e) {
+					earliest: dayLater
+					,format: rangeDemoFormat
+					,latest: thirdtyDaysLater
+					
+				}).change(function(e) {
 						 
-						//console.log(selectedDays);
-						 	var begin_range = $("#span-begin table").find(".ui-state-default");
-							var end_range = $("#span-end table").find(".ui-state-default");
+					 
 							var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
-							var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
-							while (selected_begin <= selected_end ){
-								selectedDays.push(selected_begin);
-								selected_begin += oneDay;
-							}
-							calculate(selected_begin, selected_end, selectedDays);
-					});
+							 
+							 selectedDays =[];
+							   try {
+								 
+									var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+									
+									 
+									while (selected_begin <= selected_end ){
+										selectedDays.push(selected_begin);
+										selected_begin += oneDay;
+									}
+							 
+								calculate(selected_begin, selected_end, selectedDays);
+								} catch (e) {
+									console.log(e);
+								}
+							
+				});
 
-					$("#rangeDemoRange").AnyTime_noPicker().AnyTime_picker({format:rangeDemoFormat,earliest: dayLater,  placement: "inline", hideInput: true})
-					.change(function(e) {
+				$("#rangeDemoRange").AnyTime_noPicker().AnyTime_picker(
+				{
+					earliest: dayLater
+					,format: rangeDemoFormat
+					,latest: thirdtyDaysLater
+					,placement: "inline"
+					,hideInput: false
+					,isMultiple: true
+					,values: selectedDays
+					
+				}).change(function(e) {
 						var begin_range = $("#span-begin table").find(".ui-state-default");
-							var end_range = $("#span-end table").find(".ui-state-default");
+							//var end_range = $("#span-end table").find(".ui-state-default");
 							var selected_begin = rangeDemoConv.parse($("#rangeDemoStart").val()).getTime();
-							var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
-						 
-					     
-						calculate(selected_begin, selected_end, selectedDays);
-					});
+							//var selected_end = rangeDemoConv.parse($("#rangeDemoFinish").val()).getTime();
+						  
+					       try {
+							//if($("#rangeDemoFinish").val() != null && $("#rangeDemoFinish").val() != "") {
+								var selected_end = rangeDemoConv.parse($("#rangeDemoRange").val()).getTime();
+								
+							 calculate(selected_begin, selected_end, selectedDays);
+							
+							} catch (e) {
+								console.log(e);
+							}
+							//console.log($(selectedDays.length));
+							
+						//calculate(selected_begin, selected_end, selectedDays);
+				    });
 					
 			} catch (e) {
 				console.log(e);
 				
 			}			
-	});
-
+		});
+*/
 	function calculate(selected_begin, selected_end, selected) {
 		//Hiligheted the begin
-	
+		//selected = $.unique(selected);
 	
 		var date_begin = new Date(selected_begin +0) ;
 		var date_end = new Date(selected_end +0) ;
@@ -129,19 +220,27 @@ Frequance report
 		begin_range.each(function(key, value) {
 			$(value).removeClass("AnyTime-cur-rank");
 		});
+		//console.log(selectedMoth.length);
+		 var selectMonth = selectedMoth.attr("class").substring(39,41);
+		 console.log(isNaN(selectMonth));
+		if(isNaN(selectMonth))
+			selectMonth = selectedMoth.attr("class").substring(39,40);
 		begin_range.each(function(key, value) {
-			if(selected.size() > 0 ) {
-				$(selected).each(function(key, value){
-				    console.log("AnyTime-mon"+new Date(value).getMonth()+"-btn");
-					if(selectedMoth.hasClass("AnyTime-mon"+new Date(value).getMonth()+"-btn")) {
-									console.log(new Date(value));
+			if(selected && selected.length > 0 ) {
+				$(selected).each(function(key2, value2){
+                   console.log(selectMonth);				
+				   if(selectMonth == date_begin.getMonth())
+				   if($(value).html() >= date_begin.getDate() && $(value).html() < date_end.getDate() && !$(value).hasClass("ui-state-disabled")) {
+					//console.log($(value).hasClass("ui-state-disabled"));
+					 ;
+					  
+											$(value).addClass("AnyTime-cur-rank");
+											 
+					  
 					}
 				});
 			}
-			if($(value).html() >= date_begin.getDate() && $(value).html() < date_end.getDate() && !$(value).hasClass("ui-state-disabled")) {
-			//console.log($(value).hasClass("ui-state-disabled"));
-			  $(value).addClass("AnyTime-cur-rank");
-			}
+			
 		});
 		
 		 

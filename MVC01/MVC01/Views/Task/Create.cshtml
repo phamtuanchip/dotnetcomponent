@@ -50,403 +50,436 @@
 </style>
 
 <script>
-var operation = "A"; //"A"=Adding; "E"=Editing
-	var selected_index = -1; //Index of the selected list item
-	var tbClients = localStorage.getItem("tbClients");//Retrieve the stored data
-	tbClients = JSON.parse(tbClients); //Converts string to object
-	if(tbClients == null) //If there is no data, initialize an empty array
-		tbClients = [];
+    var operation = "A"; //"A"=Adding; "E"=Editing
+    var selected_index = -1; //Index of the selected list item
+    var tbClients = localStorage.getItem("tbClients");//Retrieve the stored data
+    tbClients = JSON.parse(tbClients); //Converts string to object
+    if(tbClients == null) //If there is no data, initialize an empty array
+        tbClients = [];
 
-$(function(){
-	if(typeof(Storage) !== "undefined") {
-    // Code for localStorage/sessionStorage.
-	console.log("save avaiable");
-	} else {
-		// Sorry! No Web Storage support..
-		console.log("your browser does not support");
-	}
+    $(function(){
+        if(typeof(Storage) !== "undefined") {
+            // Code for localStorage/sessionStorage.
+            console.log("save avaiable");
+        } else {
+            // Sorry! No Web Storage support..
+            console.log("your browser does not support");
+        }
 
 
-var div = $(".Alert");
-function runIt(){
-div
-.show( "slow" )
-.animate({ left: "+=200" }, 2000 )
-.slideToggle( 1000 )
-.slideToggle( "fast" )
-.animate({ left: "-=200" }, 1500 )
-.hide( "slow" )
-.show( 1200 )
-.slideUp( "normal", runIt );
-}
+        var div = $(".Alert");
+        function runIt(){
+            div
+                .show( "slow" )
+                .animate({ left: "+=200" }, 2000 )
+                .slideToggle( 1000 )
+                .slideToggle( "fast" )
+                .animate({ left: "-=200" }, 1500 )
+                .hide( "slow" )
+                .show( 1200 )
+                .slideUp( "normal", runIt );
+        }
 
-document.getElementById("date").valueAsDate = new Date();
-function showIt() {
-var n = div.queue( "fx" );
+        document.getElementById("date").valueAsDate = new Date();
+        function showIt() {
+            var n = div.queue( "fx" );
 //$("span" ).text( n.length );
-setTimeout( showIt, 100 );
-}
+            setTimeout( showIt, 100 );
+        }
 
- $("#addbtn").off().on("click", function add(){
+        $("#addbtn").off().on("click", function add(){
 
-   Add();
-   List();
-  $("#taskform")[0].reset();
-  if($("#mappicker").css('display') === "block"){
-	$("#mappicker").css('display', 'none');
-  }
+            Add();
+            List();
+            $("#taskform")[0].reset();
+            if($("#mappicker").css('display') === "block"){
+                $("#mappicker").css('display', 'none');
+            }
 
  
- });
+        });
 
-	 $("#edit").bind("click", function(){
-		operation = "E";
-		selected_index = parseInt($(this).attr("alt").replace("Edit", ""));
-		var cli = JSON.parse(tbClients[selected_index]);
-		//$("#txtID").val(cli.ID);
-		$("#task").val(cli.Name);
-		$("#priority").val(cli.PRI);
-		$("#remind").attr("checked","checked");
-		$("#task").focus();
-	});
+        $("#edit").bind("click", function(){
+            operation = "E";
+            selected_index = parseInt($(this).attr("alt").replace("Edit", ""));
+            var cli = JSON.parse(tbClients[selected_index]);
+            //$("#txtID").val(cli.ID);
+            $("#task").val(cli.Name);
+            $("#priority").val(cli.PRI);
+            $("#remind").attr("checked","checked");
+            $("#task").focus();
+        });
 
-	$("#delete").bind("click", function(){
-		selected_index = parseInt($(this).attr("alt").replace("Delete", ""));
-		Delete();
-	});
-	$("#Done").bind("click", function(){
-		selected_index = parseInt($(this).attr("alt").replace("Done", ""));
-		Done();
-	});
+        $("#delete").bind("click", function(){
+            selected_index = parseInt($(this).attr("alt").replace("Delete", ""));
+            Delete();
+        });
+        $("#Done").bind("click", function(){
+            selected_index = parseInt($(this).attr("alt").replace("Done", ""));
+            Done();
+        });
 
-	$("#remind").bind("click", function(){
-		$("#mappicker").toggle();
-		console.log($("#mappicker").css('display') === "block");
-		if($("#mappicker").css('display') === "block"){
-			$("#search").click();
-		}
-	});
+        $("#remind").bind("click", function(){
+            $("#mappicker").toggle();
+            console.log($("#mappicker").css('display') === "block");
+            if($("#mappicker").css('display') === "block"){
+                $("#search").click();
+            }
+        });
 
- List();
+        List();
 
    
 
-  //runIt();
- // showIt();
+        //runIt();
+        // showIt();
 
-});
+    });
 
-function Add(){
-	var index = $("#data").find("tr").size();
-	var task = $("#task").val();
-	var priority = $("#priority").val();
-	var isReminde = $("#remind").is(":checked");
-	var date = $("#date").val();
-	var address = "";
-	var address_lat = "";
-	var address_lgn = "";
-	if(isReminde){
-	 address = $("#address").val();
-	 address_lat = $("#address_lat").val();
-	 address_lgn = $("#address_lgn").val();
-	}
-    //{"ReminderTaskId":0,"LocId":0,"Title":null,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":null,"Priority":0,"isRemind":false}
-	var client = JSON.stringify({
-	    ReminderTaskId: index,
-	    Title: task,
-	    Priority: priority,
-	    RemindDate: date,
-		isRemind: isReminde,
-		Remided: 'false',
-		GeoLocaltion: {
-		    // GeoLocaltionId: id,
-		    place: address,
-		    Latitude: address_lat,
-		    Longitude: address_lgn
-		}
-	});
-	tbClients.push(client);
-	var db = JSON.stringify(tbClients);
-	localStorage.setItem("tbClients", db);
+    function Add(){
+        var index = $("#data").find("tr").size();
+        var task = $("#task").val();
+        var priority = $("#priority").val();
+        var isReminde = $("#remind").is(":checked");
+        var date = $("#date").val();
+        var address = "";
+        var address_lat = "";
+        var address_lgn = "";
+        if(isReminde){
+            address = $("#address").val();
+            address_lat = $("#address_lat").val();
+            address_lgn = $("#address_lgn").val();
+        }
+        //{"ReminderTaskId":0,"LocId":0,"Title":null,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":null,"Priority":0,"isRemind":false}
+        var client = JSON.stringify({
+            ReminderTaskId: index,
+            Title: task,
+            Priority: priority,
+            RemindDate: date,
+            isRemind: isReminde,
+            Remided: 'false',
+            GeoLocaltion: {
+                // GeoLocaltionId: id,
+                place: address,
+                Latitude: address_lat,
+                Longitude: address_lgn
+            }
+        });
+        tbClients.push(client);
+        var db = JSON.stringify(tbClients);
+        localStorage.setItem("tbClients", db);
 
-	console.log("The data was saved." + db);
-	$.ajax({
-	    type: 'POST',
-	    url: "/api/Restful/AddTask",
-	    data: db,
-	    contentType: "application/json",
-	    dataType: "application/json",
-	    success: function (resultData) {
+        console.log("The data was saved." + db);
+        $.ajax({
+            type: 'POST',
+            url: "/api/Restful/AddTask",
+            data: db,
+            contentType: "application/json",
+            dataType: "application/json",
+            success: function (resultData) {
 	        
-	        console.log("The data was saved onto server ." +resultData);
-	    },
-	    error: function (err) {
-	        console.log(err);
-	    }
-	});
+                console.log("The data was saved onto server ." +resultData);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
 	 
-}
+    }
 
-function Edit(element){
-	var selected_index = parseInt($(element).attr("alt").replace("Edit", ""));
-	tbClients[selected_index] = JSON.stringify({
-	    ReminderTaskId: ReminderTaskId,
-	    Title: Title,
-	    Priority: Priority,
-	    isRemind: isRemind
-		});//Alter the selected item on the table
-	localStorage.setItem("tbClients", JSON.stringify(tbClients));
-	console.log("The data was edited.")
-	operation = "A"; //Return to default value
-	return true;
-}
+    function Edit(element){
+        var selected_index = parseInt($(element).attr("alt").replace("Edit", ""));
+        tbClients[selected_index] = JSON.stringify({
+            ReminderTaskId: ReminderTaskId,
+            Title: Title,
+            Priority: Priority,
+            isRemind: isRemind
+        });//Alter the selected item on the table
+        localStorage.setItem("tbClients", JSON.stringify(tbClients));
+        console.log("The data was edited.")
+        operation = "A"; //Return to default value
+        return true;
+    }
 
- function Done(element){
-   var selected_index = parseInt($(element).attr("alt").replace("Done", ""));
+    function Done(element){
+        var selected_index = parseInt($(element).attr("alt").replace("Done", ""));
 
- 	var cli = JSON.parse(tbClients[selected_index]);
-	if(cli.Remided == 'false') cli.Remided = true;
-	var client = JSON.stringify({
-	    ReminderTaskId: cli.ReminderTaskId,
-	    Title: cli.Title,
-	    Priority: cli.Priority,
-	    RemindDate: cli.RemindDate,
-	    isRemind: cli.isRemind,
-	    Remided: cli.Remided,
-	    GeoLocaltion: {
-	        //GeoLocaltionId: id,
-	        place: cli.GeoLocaltion.place,
-	        Latitude: cli.GeoLocaltion.Latitude,
-	        Longitude: cli.GeoLocaltion.Longitude
-	    } 
+        var cli = JSON.parse(tbClients[selected_index]);
+        if(cli.Remided == 'false') cli.Remided = true;
+        var client = JSON.stringify({
+            ReminderTaskId: cli.ReminderTaskId,
+            Title: cli.Title,
+            Priority: cli.Priority,
+            RemindDate: cli.RemindDate,
+            isRemind: cli.isRemind,
+            Remided: cli.Remided,
+            GeoLocaltion: {
+                //GeoLocaltionId: id,
+                place: cli.GeoLocaltion.place,
+                Latitude: cli.GeoLocaltion.Latitude,
+                Longitude: cli.GeoLocaltion.Longitude
+            } 
 	    
-	});
-	console.log("is reminded " + cli.Remided);
-	tbClients.splice(selected_index, 1);
-	tbClients.push(client);
-	localStorage.setItem("tbClients", JSON.stringify(tbClients));
+        });
+        console.log("is reminded " + cli.Remided);
+        tbClients.splice(selected_index, 1);
+        tbClients.push(client);
+        localStorage.setItem("tbClients", JSON.stringify(tbClients));
 
 
-	//localStorage.setItem("tbClients", JSON.stringify(tbClients));
-	reloadDb();
-	console.log("The data was edited.")
-	operation = "A"; //Return to default value
-	return true;
-}
- function Delete(element){
-	var selected_index = parseInt($(element).attr("alt").replace("Delete", ""));
-	tbClients.splice(selected_index, 1);
-	localStorage.setItem("tbClients", JSON.stringify(tbClients));
-	reloadDb();
-	console.log("Client deleted.");
-}
-function reloadDb(){
-	$("#data").find("tr:gt(0)").remove();
-	List();
-}
+        //localStorage.setItem("tbClients", JSON.stringify(tbClients));
+        reloadDb();
+        console.log("The data was edited.")
+        operation = "A"; //Return to default value
+        return true;
+    }
+    function Delete(element){
+        var selected_index = parseInt($(element).attr("alt").replace("Delete", ""));
+        tbClients.splice(selected_index, 1);
+        localStorage.setItem("tbClients", JSON.stringify(tbClients));
+        reloadDb();
+        console.log("Client deleted.");
+    }
+    function reloadDb(){
+        $("#data").find("tr:gt(0)").remove();
+        List();
+    }
 
-$("#taskform").bind("submit",function(){
-	if(operation == "A")
-		return Add();
-	else
-		return Edit();
-});
+    $("#taskform").bind("submit",function(){
+        if(operation == "A")
+            return Add();
+        else
+            return Edit();
+    });
 
 
 
     //{"ReminderTaskId":0,"GeoLocaltionId":0,"Title":null,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":{"GeoLocaltionId":0,"Longitude":0.0,"Latitude":0.0,"place":null},"Priority":0,"isRemind":false,"Remided":false}
- function List(){
-	console.log("load data");
-	$("#data").find("tr:gt(0)").remove();
-	for(var i in tbClients){
-	    console.log("iii " +i);
-		var cli = JSON.parse(tbClients[i]);
-		var finished = "";
+    function List(){
+        console.log("load data");
+        $("#data").find("tr:gt(0)").remove();
+        for(var i in tbClients){
+            console.log("iii " +i);
+            var cli = JSON.parse(tbClients[i]);
+            var finished = "";
 
-		if(cli.Remided == true){finished = "Finished";}
+            if(cli.Remided == true){finished = "Finished";}
 
-		var row = '<tr><td>' + cli.ReminderTaskId + '</td><td class="' + finished + '">' + cli.Title + '</td><td>' + cli.RemindDate + '</td><td>' + cli.Priority + '</td><td>' + cli.GeoLocaltion.place + '</td><td><span alt="Done' + i + '" onclick="javaScript:Done(this);">Done</span>|<span alt="Edit' + i + '" onclick="javaScript:Edit(this);">Edit</span>|<span id="delete" alt="Delete' + i + '"  onclick="javaScript:Delete(this);">Delete</span></td></tr>'
+            var row = '<tr><td>' + cli.ReminderTaskId + '</td><td class="' + finished + '">' + cli.Title + '</td><td>' + cli.RemindDate + '</td><td>' + cli.Priority + '</td><td>' + cli.GeoLocaltion.place + '</td><td><span alt="Done' + i + '" onclick="javaScript:Done(this);">Done</span>|<span alt="Edit' + i + '" onclick="javaScript:Edit(this);">Edit</span>|<span id="delete" alt="Delete' + i + '"  onclick="javaScript:Delete(this);">Delete</span></td></tr>'
 
-	  	$("#data").append(row);
-	}
+            $("#data").append(row);
+        }
 
 
  
-function verifyAddress(){
-	return true;
-}
-
-(function mapInit($, google) {
-    var marker;
-    var cityCircle;
-    var $mapCanvas = $('#map-canvas')[0];
-    var $searchLocation = $('#search');
-    var $address = $('#address');
-    var $radiusInput = $('#radius');
-
-    var geocoder = new google.maps.Geocoder();
-    var mapOptions = {
-        center: new google.maps.LatLng(21.0277644, 105.83415979999995),
-        zoom: 8
-    };
-    var map = new google.maps.Map($mapCanvas, mapOptions);
-    var marker = new google.maps.Marker({
-        map: map,
-        draggable: true,
-        position: new google.maps.LatLng(21.0277644, 105.83415979999995)
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-    infowindow.setContent("Hanoi, Vietnam");
-    infowindow.open(map, marker);
-    var populationOptions = {
-        strokeColor: 'blue',
-        strokeOpacity: 0.5,
-        strokeWeight: 1,
-        fillColor: '#45C8DC',
-        fillOpacity: 0.35,
-        map: map,
-        center: new google.maps.LatLng(21.0277644, 105.83415979999995),
-        radius: 100
-    };
-    cityCircle = new google.maps.Circle(populationOptions);
-    cityCircle.map.fitBounds(cityCircle.getBounds());
-    var autocomplete = new google.maps.places.Autocomplete($address[0]);
-    autocomplete.bindTo('bounds', map);
-
-
-    //$('#tableLocationListId tr').find("#updateArea").hide();
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        if (verifyAddress()) {
-            $searchLocation.click();
+        function verifyAddress(){
+            return true;
         }
-    });
-    google.maps.event.addListener(marker, 'dragend', function () {
-        console.log("in drag");
-        lat = marker.getPosition().lat();
-        lng = marker.getPosition().lng();
-        $("#latitudein").val(lat);
-        $("#longitudein").val(lng);
-        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    $("#address").val(results[0].formatted_address);
-                }
-            }
-        });
-    });
 
-    $('#search').off('click').on('click', function () {
-        console.log('search...');
-        if (verifyAddress()) {
+        (function mapInit($, google) {
+            var marker;
+            var cityCircle;
+            var $mapCanvas = $('#map-canvas')[0];
+            var $searchLocation = $('#search');
+            var $address = $('#address');
+            var $radiusInput = $('#radius');
+
+            var geocoder = new google.maps.Geocoder();
             var mapOptions = {
-                zoom: 15,
-                center: new google.maps.LatLng(21.0277644, 105.83415979999995)
+                center: new google.maps.LatLng(21.0277644, 105.83415979999995),
+                zoom: 8
             };
-            var map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+            var map = new google.maps.Map($mapCanvas, mapOptions);
             var marker = new google.maps.Marker({
                 map: map,
                 draggable: true,
                 position: new google.maps.LatLng(21.0277644, 105.83415979999995)
             });
-            var geocoder = new google.maps.Geocoder();
-            var addressVal = $("#address").val();
-            //var cityCircle;	
-            geocoder.geocode({ 'address': addressVal }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);
-                    if (marker) {
-                        marker.setMap(null);
-                    }
-                    var infowindow = new google.maps.InfoWindow();
-                    marker = new google.maps.Marker({
-                        map: map,
-                        draggable: true,
-                        position: results[0].geometry.location
-                    });
 
-                    infowindow.setContent(results[0].formatted_address);
-                    infowindow.open(map, marker);
-                    var radius = parseInt($('#radius').val(), 10);
-                    var populationOptions = {
-                        strokeColor: 'blue',
-                        strokeOpacity: 0.5,
-                        strokeWeight: 1,
-                        fillColor: '#45C8DC',
-                        fillOpacity: 0.35,
-                        map: map,
-                        center: results[0].geometry.location,
-                        radius: radius
-                    };
-                    google.maps.event.addListener(marker, 'dragend', function () {
-                        console.log("in drag");
-                        lat = marker.getPosition().lat();
-                        lng = marker.getPosition().lng();
-                        $("#address_lat").val(lat);
-                        $("#address_lgn").val(lng);
-                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                if (results[0]) {
-                                    $("#address").val(results[0].formatted_address);
+            var infowindow = new google.maps.InfoWindow();
+            infowindow.setContent("Hanoi, Vietnam");
+            infowindow.open(map, marker);
+            var populationOptions = {
+                strokeColor: 'blue',
+                strokeOpacity: 0.5,
+                strokeWeight: 1,
+                fillColor: '#45C8DC',
+                fillOpacity: 0.35,
+                map: map,
+                center: new google.maps.LatLng(21.0277644, 105.83415979999995),
+                radius: 100
+            };
+            cityCircle = new google.maps.Circle(populationOptions);
+            cityCircle.map.fitBounds(cityCircle.getBounds());
+            var autocomplete = new google.maps.places.Autocomplete($address[0]);
+            autocomplete.bindTo('bounds', map);
 
-                                    var $radiusInput = $('#radius');
-                                    var radius = parseInt($radiusInput.val(), 10);
-                                    var populationOptions = {
-                                        strokeColor: 'blue',
-                                        strokeOpacity: 0.5,
-                                        strokeWeight: 1,
-                                        fillColor: '#45C8DC',
-                                        fillOpacity: 0.35,
-                                        map: map,
-                                        //center: results[0].geometry.location,
-                                        center: marker.getPosition(),
-                                        radius: radius
-                                    };
 
-                                    if (cityCircle) {
-                                        cityCircle.setMap(null);
-                                    }
-                                    cityCircle = new google.maps.Circle(populationOptions);
-                                    cityCircle.map.fitBounds(cityCircle.getBounds());
-                                    //$('#tableLocationListId tr.MapView').find("#localionName").val(results[0].formatted_address);
-                                    //$('#tableLocationListId tr.MapView').find("#latId").val(populationOptions.center.lat());
-                                    //$('#tableLocationListId tr.MapView').find("#lgnId").val(populationOptions.center.lng());
-                                    //$('#tableLocationListId tr.MapView').find("#radiusId").val(radius);
-                                }
-                            }
-                        });
-                    });
-                    if (cityCircle) {
-                        cityCircle.setMap(null);
-                    }
-                    cityCircle = new google.maps.Circle(populationOptions);
-                    cityCircle.map.fitBounds(cityCircle.getBounds());
-                    $("#address_lat").val(populationOptions.center.lat());
-                    $("#address_lgn").val(populationOptions.center.lng());
-
-                } else {
-                    //console.log('Geocode was not successful for the following reason: ' + status);
+            //$('#tableLocationListId tr').find("#updateArea").hide();
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                if (verifyAddress()) {
+                    $searchLocation.click();
                 }
             });
-        }
-    });
-    $('#radius').on('change', function () {
-        if (verifyAddress()) {
-            cityCircle.setRadius(parseInt($(this).val(), 10));
-            cityCircle.map.fitBounds(cityCircle.getBounds());
-            //$("#radiusId").val(parseInt($(this).val(), 10));
-        }
-    });
+            google.maps.event.addListener(marker, 'dragend', function () {
+                console.log("in drag");
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
+                $("#latitudein").val(lat);
+                $("#longitudein").val(lng);
+                geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            $("#address").val(results[0].formatted_address);
+                        }
+                    }
+                });
+            });
 
-})($, google);
+            $('#search').off('click').on('click', function () {
+                console.log('search...');
+                if (verifyAddress()) {
+                    var mapOptions = {
+                        zoom: 15,
+                        center: new google.maps.LatLng(21.0277644, 105.83415979999995)
+                    };
+                    var map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        draggable: true,
+                        position: new google.maps.LatLng(21.0277644, 105.83415979999995)
+                    });
+                    var geocoder = new google.maps.Geocoder();
+                    var addressVal = $("#address").val();
+                    //var cityCircle;	
+                    geocoder.geocode({ 'address': addressVal }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            map.setCenter(results[0].geometry.location);
+                            if (marker) {
+                                marker.setMap(null);
+                            }
+                            var infowindow = new google.maps.InfoWindow();
+                            marker = new google.maps.Marker({
+                                map: map,
+                                draggable: true,
+                                position: results[0].geometry.location
+                            });
+
+                            infowindow.setContent(results[0].formatted_address);
+                            infowindow.open(map, marker);
+                            var radius = parseInt($('#radius').val(), 10);
+                            var populationOptions = {
+                                strokeColor: 'blue',
+                                strokeOpacity: 0.5,
+                                strokeWeight: 1,
+                                fillColor: '#45C8DC',
+                                fillOpacity: 0.35,
+                                map: map,
+                                center: results[0].geometry.location,
+                                radius: radius
+                            };
+                            google.maps.event.addListener(marker, 'dragend', function () {
+                                console.log("in drag");
+                                lat = marker.getPosition().lat();
+                                lng = marker.getPosition().lng();
+                                $("#address_lat").val(lat);
+                                $("#address_lgn").val(lng);
+                                geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+                                        if (results[0]) {
+                                            $("#address").val(results[0].formatted_address);
+
+                                            var $radiusInput = $('#radius');
+                                            var radius = parseInt($radiusInput.val(), 10);
+                                            var populationOptions = {
+                                                strokeColor: 'blue',
+                                                strokeOpacity: 0.5,
+                                                strokeWeight: 1,
+                                                fillColor: '#45C8DC',
+                                                fillOpacity: 0.35,
+                                                map: map,
+                                                //center: results[0].geometry.location,
+                                                center: marker.getPosition(),
+                                                radius: radius
+                                            };
+
+                                            if (cityCircle) {
+                                                cityCircle.setMap(null);
+                                            }
+                                            cityCircle = new google.maps.Circle(populationOptions);
+                                            cityCircle.map.fitBounds(cityCircle.getBounds());
+                                            //$('#tableLocationListId tr.MapView').find("#localionName").val(results[0].formatted_address);
+                                            //$('#tableLocationListId tr.MapView').find("#latId").val(populationOptions.center.lat());
+                                            //$('#tableLocationListId tr.MapView').find("#lgnId").val(populationOptions.center.lng());
+                                            //$('#tableLocationListId tr.MapView').find("#radiusId").val(radius);
+                                        }
+                                    }
+                                });
+                            });
+                            if (cityCircle) {
+                                cityCircle.setMap(null);
+                            }
+                            cityCircle = new google.maps.Circle(populationOptions);
+                            cityCircle.map.fitBounds(cityCircle.getBounds());
+                            $("#address_lat").val(populationOptions.center.lat());
+                            $("#address_lgn").val(populationOptions.center.lng());
+
+                        } else {
+                            //console.log('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                }
+            });
+            $('#radius').on('change', function () {
+                if (verifyAddress()) {
+                    cityCircle.setRadius(parseInt($(this).val(), 10));
+                    cityCircle.map.fitBounds(cityCircle.getBounds());
+                    //$("#radiusId").val(parseInt($(this).val(), 10));
+                }
+            });
+
+        })($, google);
 
 
-}
+    }
 
 
 
 </script>
+<div class="button" id="test-btn">save me</div>
+<script>
+    
+    $(function () {
+        console.log("add save");
+        $("#test-btn").on("click", function () {
+            var source = { "Title": "test2", "RemindDate": "2016-10-04T00:00:00", "GeoLocaltion": { "GeoLocaltionId": 0, "Longitude": 0.0, "Latitude": 0.0, "place": null }, "Priority": 0, "isRemind": false, "Remided": false };
+           source = JSON.stringify(source);
+            $.ajax({
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: source,
+                url: "/api/Restful/AddTask",
+                success: function (data) {
+                    console.log("success");
+                    console.log(data);
+                },
+                error: function (e) {
+                    console.log("error");
+                    console.log(e);
+                },
+                done: function (e) {
+                    console.log("done");
+                    console.log(e);
+                }
 
+            });
+
+        });
+
+    });
+
+</script>
  <div class="Alert"></div>
  <div class="container">
    

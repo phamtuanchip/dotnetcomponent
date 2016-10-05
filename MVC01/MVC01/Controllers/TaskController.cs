@@ -7,7 +7,7 @@ using MVC01.Models;
 using System.Data.Entity;
 namespace MVC01.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class TaskController : Controller
     {
         MusicStoreEntities db = new MusicStoreEntities();
@@ -132,6 +132,13 @@ namespace MVC01.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public JsonResult AddTask(ReminderTask task)
+        {
+            return Json(task);
+
         }
     }
 }

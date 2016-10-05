@@ -46,15 +46,17 @@ namespace MVC01.Services
         }
 
         [HttpPost]
-        public HttpResponseMessage AddTask([FromBody]string value)
+         
+        public JsonResult<ReminderTask> AddTask([FromBody] ReminderTask value)
         {
             //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             // List<ReminderTask> reminder = JsonConvert.DeserializeObject<List<ReminderTask>>(output);
             //json.UseDataContractJsonSerializer = true;
             // db.Tasks.Add();
             // db.SaveChanges();
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, value);
-            return response;
+           /// HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, value);
+            value.Title = value.Title + "updated";
+            return Json(value); ;
         }
 
         // PUT: api/Restful/5

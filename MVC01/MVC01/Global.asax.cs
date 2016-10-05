@@ -21,9 +21,9 @@ namespace MVC01
         {
             System.Data.Entity.Database.SetInitializer(new MVC01.Models.SampleData());
            
-            HttpConfiguration config = GlobalConfiguration.Configuration;
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
+            //HttpConfiguration config = GlobalConfiguration.Configuration;
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+           // config.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
