@@ -49,7 +49,7 @@ namespace MVC02.Controllers
                 foreach (var day in vm.RangeDays)
                 {
 
-                    vm.RangeValues.Add(new FormatterConverter().ToDateTime(day));    
+                    vm.MapDays.Add(day, day);
                 }
                 
             }

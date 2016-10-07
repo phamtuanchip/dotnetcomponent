@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,10 +13,12 @@ namespace MVC02.Models
         public IList<DateTime> RangeValues { get; set; }
         public bool isChecked { get; set; }
         public string ClientFormater { get; set; }
+        public Dictionary<String, String> MapDays { get; set; }
         public HomeModelView()
         {
             RangeDays = new List<string>();
             RangeValues = new List<DateTime>();
+            MapDays =  new Dictionary<String, String>();
 
         }
 

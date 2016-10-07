@@ -10,11 +10,11 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "testForm" }))
 {
     <div id="inputArea">
-        @foreach (var day in Model.RangeValues)
+        @foreach (var day in Model.MapDays.Keys)
         {
             
             <div>
-             @Html.TextBoxFor(m=>m.RangeDays, new {@Name = "RangeDays" ,  Value = day.ToShortDateString() })
+             @Html.HiddenFor(m=>m.RangeDays, new {@Name = "RangeDays" ,  Value = day })
             </div>
         }
 
