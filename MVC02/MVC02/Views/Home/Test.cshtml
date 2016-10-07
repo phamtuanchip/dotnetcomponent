@@ -1,0 +1,52 @@
+﻿@using System.Web.UI.HtmlControls
+@using  MVC02.Models;
+@model MVC02.Models.HomeModelView 
+
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "testForm" }))
+{
+    <div id="inputArea">
+        @foreach (var day in Model.RangeValues)
+        {
+            
+            <div>
+             @Html.TextBoxFor(m=>m.RangeDays, new {@Name = "RangeDays" ,  Value = day.ToShortDateString() })
+            </div>
+        }
+
+    </div>
+    @Html.CheckBoxFor(m => m.isChecked)
+    @Html.TextBoxFor(m => m.ClientFormater , new {Value = "dd/MM/yyyy" , id ="dateFormat"})
+    <input type="button" id="add" value="add more"/>
+
+    <input type="submit" id="save" value="save"/>
+    
+
+}
+
+
+<script>
+    var counter = 0;
+    $(function() {
+        $("#add").on("click", function () {
+            var formater = $("#dateFormat").val();
+            var myDate = new Date();
+            var month = myDate.getMonth() + 1;
+            if (month < 10) month = '0' + month;
+            var day = myDate.getDate();
+            if (day < 10) day = '0' + day;
+
+            var dateValue = month + "/" + day + "/" + myDate.getFullYear();
+
+            var input = "<div style='border:solid 1px red'><input id='RangeDays" + counter + "' name='RangeDays' type='text' value ='" + dateValue + "' /></div>";
+            $("#inputArea").append(input);
+            counter ++;
+        });
+
+    });
+
+</script>
