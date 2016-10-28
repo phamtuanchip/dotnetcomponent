@@ -3,12 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Music store</title>
+    <title>@ViewBag.Title - TaskManager</title>
     @Styles.Render("~/Content/Site.min.css") 
     @Styles.Render("~/Content/StyleSheet.min.css")
     @Styles.Render("~/Content/bootstrap.min.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("/Content/Chat/js/md5.min.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @if (Request.IsAuthenticated)
+    {
+        @Scripts.Render("~/Scripts/jquery.signalR-2.1.2.min.js")
+        @Scripts.Render("~/signalr/hubs")
+        @Scripts.Render("~/scripts/mvcjs.js")
+    }
 </head>
 <body>        
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -38,8 +47,8 @@
                     <li>@Html.ActionLink("Chat", "Chat", "Home")</li> 
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Store", "Index", "Store")</li>
-                    <li>@Html.ActionLink("Manager", "Index", "StoreManager")</li>
+                    @*<li>@Html.ActionLink("Store", "Index", "Store")</li>
+                    <li>@Html.ActionLink("Manager", "Index", "StoreManager")</li>*@
                     <li>@Html.ActionLink("Task", "Index", "Task")</li>
                     <li >
                         <input id="searchbox" type="text" class="form-control" placeholder="Search" >
@@ -50,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div id="maincontent" class="container body-content" style="display:block; margin-top: 150px;position:relative;">
+    <div id="maincontent" class="containment-wrapper container body-content" style="display:block; margin-top: 150px;position:relative;">
         @RenderBody()      
     </div>
     <hr />
@@ -65,17 +74,8 @@
         </tbody> 
         </table>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    @if (Request.IsAuthenticated)
-    {
-     @Scripts.Render("~/Scripts/jquery.signalR-2.1.2.min.js")
-     @Scripts.Render("~/signalr/hubs")
-     @Scripts.Render("~/scripts/mvcjs.js")
-
-    }
-
+   
+  
 </body>
 
 </html>

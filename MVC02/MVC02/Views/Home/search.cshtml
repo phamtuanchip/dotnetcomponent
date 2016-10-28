@@ -1,0 +1,53 @@
+﻿
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+             
+        </div>
+    </section>
+}
+<h3>We suggest the following:</h3>
+<ol class="round"></ol>
+Mission id ajax fisrt load
+ <div class="ui-widget">
+    <input id="search" />
+</div>
+  
+    <script>
+        $(function () {
+            var caches = [];
+            var firstLoad = true;
+            $.ajax({
+                url: "/Home/searchMissionIndex",
+                dataType: "json",
+                success: function (data) {
+                    //var list = $.map(data, function(val) {
+                    //    return $.extend(val,{label:val.label, value:val.value});
+                    //});
+
+
+                    firstLoad = false;
+                    caches = ($.map(data, function (item) {
+                        return {
+                            label: item.label,
+                            value: item.value
+                        }
+                    }));
+                    $("#search").autocomplete("option", "source", caches);
+                },
+                error: function (e) { console.log(e); }
+            });
+
+            $("#search").autocomplete({              
+                search: function (event, ui) {
+                    console.log(caches);
+                }
+            });
+        });
+
+
+    </script>

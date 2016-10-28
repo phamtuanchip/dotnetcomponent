@@ -8,6 +8,9 @@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
          @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryui")
+        
     </head>
     <body>
         <header>
@@ -25,6 +28,7 @@
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             <li>@Html.ActionLink("Test", "Test", "Home")</li>
+                            <li>@Html.ActionLink("Search", "Search", "Home")</li>
                         </ul>
                     </nav>
                 </div>
@@ -44,7 +48,6 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        
     </body>
 </html>

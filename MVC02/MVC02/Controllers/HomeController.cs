@@ -64,5 +64,40 @@ namespace MVC02.Controllers
 
             return View();
         }
+        public ActionResult Search()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+        public class MissionData {
+        public    String id;
+            public String value;
+            public String label;
+            public DateTime lastDay;
+        }
+        public JsonResult searchMissionIndex() {
+            List<MissionData> data = new List<MissionData>();
+            List<String> term = new List<string>();
+            var array = new int[] { 1, 2, 3, 4 };
+            for (var i = 0; i <= 8000; i++)
+            {
+
+                var id = "ppoisi.16." + i;
+                term.Add(id);
+            }
+                for (var i = 0; i <= 10000; i++) {
+                
+                var sid = "ppoisi.16." + i;
+                foreach (char c in "abcdefghiklmnopqrstuvwxyz"){
+                    data.Add(new MissionData { label = sid + ".a" + c, value = sid + ".a" + c + i, id = sid, lastDay = new DateTime() });
+                }
+                
+                
+            }
+            IEnumerable<MissionData> searchData = data.Where(d => term.Contains(d.id)).Select(m => new MissionData {label = m.label,value = m.id, id = m.id, lastDay = m.lastDay });
+            
+            return Json(searchData.GroupBy(m => m.id).ToDictionary(x => x.Key), JsonRequestBehavior.AllowGet);
+        }
     }
 }

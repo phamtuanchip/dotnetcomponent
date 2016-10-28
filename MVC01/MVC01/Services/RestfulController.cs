@@ -32,9 +32,9 @@ namespace MVC01.Services
         // Need to update WebApiConfig
 
         [HttpGet]
-        public JsonResult<List<Album>> Search(String key)
+        public JsonResult<List<ReminderTask>> Search(String key)
         {
-            var result = db.Albums.Where(x => x.Title.ToLower().StartsWith(key.ToLower())).ToList();
+            var result = db.Tasks.Where(x => x.Title.ToLower().StartsWith(key.ToLower())).ToList();
             return Json(result);
         }
 

@@ -1,52 +1,46 @@
-﻿@using System.Web.UI.HtmlControls
-@using  MVC02.Models;
-@model MVC02.Models.HomeModelView 
+﻿<div class="ui-widget">
+    <label for="city">Your city: </label>
+    <input id="city">
+    Powered by <a href="http://geonames.org">geonames.org</a>
+</div>
 
-@{
-    ViewBag.Title = "Test";
-}
-
-<h2>Test</h2>
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "testForm" }))
-{
-    <div id="inputArea">
-        @foreach (var day in Model.MapDays.Keys)
-        {
-            
-            <div>
-             @Html.HiddenFor(m=>m.RangeDays, new {@Name = "RangeDays" ,  Value = day })
-            </div>
-        }
-
-    </div>
-    @Html.CheckBoxFor(m => m.isChecked)
-    @Html.TextBoxFor(m => m.ClientFormater , new {Value = "dd/MM/yyyy" , id ="dateFormat"})
-    <input type="button" id="add" value="add more"/>
-
-    <input type="submit" id="save" value="save"/>
-    
-
-}
-
+<div class="ui-widget" style="margin-top:2em; font-family:Arial">
+    Result:
+    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+</div> 
 
 <script>
-    var counter = 0;
-    $(function() {
-        $("#add").on("click", function () {
-            var formater = $("#dateFormat").val();
-            var myDate = new Date();
-            var month = myDate.getMonth() + 1;
-            if (month < 10) month = '0' + month;
-            var day = myDate.getDate();
-            if (day < 10) day = '0' + day;
+  $(function() {
+    function log( message ) {
+      $( "<div>" ).text( message ).prependTo( "#log" );
+      $( "#log" ).scrollTop( 0 );
+    }
 
-            var dateValue = month + "/" + day + "/" + myDate.getFullYear();
-
-            var input = "<div style='border:solid 1px red'><input id='RangeDays" + counter + "' name='RangeDays' type='text' value ='" + dateValue + "' /></div>";
-            $("#inputArea").append(input);
-            counter ++;
+    $( "#city" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "http://gd.geobytes.com/AutoCompleteCity",
+          dataType: "jsonp",
+          data: {
+            q: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
         });
-
+      },
+      minLength: 3,
+      select: function( event, ui ) {
+        log( ui.item ?
+          "Selected: " + ui.item.label :
+          "Nothing selected, input was " + this.value);
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
     });
-
+  });
 </script>
