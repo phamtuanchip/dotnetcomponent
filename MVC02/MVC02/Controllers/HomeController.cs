@@ -70,6 +70,11 @@ namespace MVC02.Controllers
 
             return View();
         }
+        public ActionResult DisplayData() {
+            ViewBag.Message = "Your display page.";
+
+            return View();
+        }
         public class MissionData {
         public    String id;
             public String value;

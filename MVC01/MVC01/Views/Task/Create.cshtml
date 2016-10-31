@@ -150,7 +150,7 @@
             address_lat = $("#address_lat").val();
             address_lgn = $("#address_lgn").val();
         }
-        //{"ReminderTaskId":0,"LocId":0,"Title":null,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":null,"Priority":0,"isRemind":false}
+        //{"Title":null,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":{"GeoLocaltionId":0,"Longitude":0.0,"Latitude":0.0,"place":null},"Priority":0,"isRemind":false,"Remided":false}
         var client = JSON.stringify({
             ReminderTaskId: index,
             Title: task,
@@ -170,6 +170,8 @@
         localStorage.setItem("tbClients", db);
 
         console.log("The data was saved." + db);
+
+        db = '{"Title":test,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":{"GeoLocaltionId":0,"Longitude":0.0,"Latitude":0.0,"place":null},"Priority":0,"isRemind":false,"Remided":false}';
         $.ajax({
             type: 'POST',
             url: "/api/Restful/AddTask",

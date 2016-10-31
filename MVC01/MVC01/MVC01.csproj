@@ -272,6 +272,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Chat.css" />
+    <Content Include="Content\Chat\css\style.css" />
+    <Content Include="Content\Chat\index.html" />
+    <Content Include="Content\Chat\js\index.js" />
+    <Content Include="Content\Chat\js\md5.min.js" />
+    <Content Include="Content\Chat\license.txt" />
+    <Content Include="Content\Chat\README.txt" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\PagedList.min.css">
       <DependentUpon>PagedList.css</DependentUpon>
@@ -298,6 +304,7 @@
     </Content>
     <Content Include="ClassDiagram1.cd" />
     <Content Include="Content\StyleSheet.less" />
+    <Content Include="Content\Chat\less\style.less" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
