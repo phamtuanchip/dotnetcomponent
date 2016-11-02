@@ -16,35 +16,123 @@ Mission id ajax fisrt load
  <div class="ui-widget">
     <input id="search" />
 </div>
-  
+   <div class="grid-container outline">
+       <div class="row">
+           @foreach (var s in (List<String>)@ViewBag.items)
+           {
+
+               <div id="@s" class="col-3"><p>@s</p></div>
+              
+
+           }
+       </div>
+</div>
+<style>
+    .grid-container {
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    /*-- our cleafix hack -- */
+    .row:before,
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    [class*='col-'] {
+        float: right;
+        min-height: 1px;
+        width: 16.66%;
+        /*-- our gutter -- */
+        padding: 12px;
+        background-color: #FFDCDC;
+    }
+
+    .col-1 {
+        width: 16.66%;
+    }
+
+    .col-2 {
+        width: 33.33%;
+    }
+
+    .col-3 {
+        width: 50%;
+    }
+
+    .col-4 {
+        width: 66.66%;
+    }
+
+    .col-5 {
+        width: 83.33%;
+    }
+
+    .col-6 {
+        width: 100%;
+    }
+
+    .outline, .outline * {
+        outline: 1px solid #F6A1A1;
+    }
+
+    /*-- some extra column content styling --*/
+    [class*='col-'] > p {
+        background-color: #FFC2C2;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        color: white;
+    }
+</style>
     <script>
         $(function () {
+          
             var caches = [];
-            var firstLoad = true;
-            $.ajax({
-                url: "/Home/searchMissionIndex",
-                dataType: "json",
-                success: function (data) {
-                    //var list = $.map(data, function(val) {
-                    //    return $.extend(val,{label:val.label, value:val.value});
-                    //});
-
-
-                    firstLoad = false;
-                    caches = ($.map(data, function (item) {
-                        return {
-                            label: item.label,
-                            value: item.value
-                        }
-                    }));
-                    $("#search").autocomplete("option", "source", caches);
-                },
-                error: function (e) { console.log(e); }
-            });
-
+            var  regex = /\w[.]{1}[aA]?[A-Za-z]?$/;
             $("#search").autocomplete({              
-                search: function (event, ui) {
-                    console.log(caches);
+                source: function (request, response) {
+                    var key = request.term.trim();
+                    var test = regex.exec(key);
+                    console.log(test);
+                    if (test != null) {
+                        key = key.substring(0, key.lastIndexOf("."));
+                    }
+                    console.log(key);
+                    var dataTb = $(".grid-container .row").find(".col-3");
+                    var ids = [];
+                    var j = 0;
+                   
+                     
+                    $.map(dataTb, function (val, idx) {
+                        if (j <= 10 && $(val).attr("id").toUpperCase().indexOf(key.toUpperCase()) > -1) {
+                            ids.push($(val).attr("id"));
+                            j++;
+                        }
+                    });
+                    console.log(ids);
+                    caches = [];
+                    $.ajax({
+                        url: "/Home/searchMissionIndex",
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(ids),
+                        type: "POST",
+                        async: false,
+                        success: function (data) {                           
+                           $.map(data, function (item) {
+                               if (item.label.toUpperCase().indexOf(request.term.trim().toUpperCase()) > -1) {
+                                   caches.push(item);
+                               }
+                               
+                            });
+                            //$("#search").autocomplete("option", "source", caches);
+                        },
+                        error: function (e) { console.log(e); }
+                    });
+                    response(caches);
                 }
             });
         });

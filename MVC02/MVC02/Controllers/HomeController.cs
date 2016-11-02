@@ -67,12 +67,27 @@ namespace MVC02.Controllers
         public ActionResult Search()
         {
             ViewBag.Message = "Your contact page.";
+            List<String> term = new List<string>();
+            ViewBag.Message = "Your display page.";
+            for (var i = 0; i <= 8000; i++)
+            {
 
+                var id = "ppoisi.16." + i;
+                term.Add(id);
+            }
+            ViewBag.items = term;
             return View();
         }
         public ActionResult DisplayData() {
+            List<String> term = new List<string>();
             ViewBag.Message = "Your display page.";
+            for (var i = 0; i <= 8000; i++)
+            {
 
+                var id = "ppoisi.16." + i;
+                term.Add(id);
+            }
+            ViewBag.items = term;
             return View();
         }
         public class MissionData {
@@ -81,16 +96,13 @@ namespace MVC02.Controllers
             public String label;
             public DateTime lastDay;
         }
-        public JsonResult searchMissionIndex() {
+
+        [System.Web.Mvc.HttpPost]
+        public JsonResult searchMissionIndex(List<String> ids) {
             List<MissionData> data = new List<MissionData>();
             List<String> term = new List<string>();
             var array = new int[] { 1, 2, 3, 4 };
-            for (var i = 0; i <= 8000; i++)
-            {
-
-                var id = "ppoisi.16." + i;
-                term.Add(id);
-            }
+           
                 for (var i = 0; i <= 10000; i++) {
                 
                 var sid = "ppoisi.16." + i;
@@ -100,9 +112,11 @@ namespace MVC02.Controllers
                 
                 
             }
-            IEnumerable<MissionData> searchData = data.Where(d => term.Contains(d.id)).Select(m => new MissionData {label = m.label,value = m.id, id = m.id, lastDay = m.lastDay });
-            
-            return Json(searchData.GroupBy(m => m.id).ToDictionary(x => x.Key), JsonRequestBehavior.AllowGet);
+            IEnumerable<MissionData> searchData = new List<MissionData>();
+            if (ids != null) {
+             searchData = data.Where(d => ids.Contains(d.id)).Select(m => new MissionData {label = m.label,value = m.id, id = m.id, lastDay = m.lastDay });
+            }
+            return Json(searchData, JsonRequestBehavior.AllowGet);
         }
     }
 }
