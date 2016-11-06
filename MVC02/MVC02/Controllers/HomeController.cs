@@ -1,14 +1,17 @@
-﻿using System;
+﻿using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using Microsoft.VisualBasic.FileIO;
+using MVC02.Models;
+using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.ActiveDirectory;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
-using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
-using MVC02.Models;
 
 namespace MVC02.Controllers
 {
@@ -119,6 +122,27 @@ namespace MVC02.Controllers
             }
             return View();
         }
+        public ActionResult ConnectLDAPServer()
+        {
+            try
+            {
+                var searchString = "test";
+                DirectoryEntry rootEntry = new DirectoryEntry("LDAP://localhost");
+                rootEntry.AuthenticationType = AuthenticationTypes.None; //Or whatever it need be
+                DirectorySearcher searcher = new DirectorySearcher(rootEntry);
+                var queryFormat = "(&(objectClass=user)(objectCategory=person)(|(SAMAccountName=*{0}*)(cn=*{0}*)(gn=*{0}*)(sn=*{0}*)(email=*{0}*)))";
+                searcher.Filter = string.Format(queryFormat, searchString);
+                foreach (SearchResult result in searcher.FindAll())
+                {
+                    Console.WriteLine("account name: {0}", result.Properties["samaccountname"].Count > 0 ? result.Properties["samaccountname"][0] : string.Empty);
+                    Console.WriteLine("common name: {0}", result.Properties["cn"].Count > 0 ? result.Properties["cn"][0] : string.Empty);
+                }
+            }
+            catch (Exception e) {
+                ViewBag.ErrorMsg = "Connection LDAP error: " + e.Message;
+            }
+            return View();
+        }
         [System.Web.Mvc.HttpPost]
         public JsonResult searchMissionIndex(List<String> ids) {
             List<MissionData> data = new List<MissionData>();
@@ -140,5 +164,31 @@ namespace MVC02.Controllers
             }
             return Json(searchData, JsonRequestBehavior.AllowGet);
         }
+        [System.Web.Mvc.HttpGet]
+        public ActionResult upLoadFile() {
+            return View();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult upLoadFile(HttpPostedFileBase file) {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                file.SaveAs(path);
+                ViewBag.msg = "file saved " + path;
+                ViewBag.filePath = path;
+            }
+
+            return View();
+        }
+
+        public ActionResult Download(string virtualFilePath)
+        {
+            
+            return File(virtualFilePath, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(virtualFilePath));
+        }
+
+        
     }
 }

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "upLoadFile";
+}
+
+<h2>upLoadFile</h2>
+@ViewBag.msg
+@using (Html.BeginForm("upLoadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" name="Submit" id="Submit" value="Upload" />
+}
+@if(ViewBag.filePath != null) { 
+<a href="Download?virtualFilePath=@ViewBag.filePath">download</a>
+}
