@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "ReadCSVFile";
+}
+
+<h2>ReadCSVFile</h2>
+@if (ViewBag.Data != null)
+{
+    @Html.Raw("<table>")
+    Dictionary<int, String[]>
+        d = (Dictionary<int, String[]>
+            )ViewBag.Data;
+    int id = 0;
+    foreach (var r in d.Keys)
+    {
+      
+
+        
+
+        @Html.Raw("<tr>")
+        var vs = new String[] { };
+        d.TryGetValue(r, out vs);
+        foreach (var c in vs)
+        {
+            if (id == 0) {@Html.Raw("<th>") }
+            else
+            {@Html.Raw("<td>")}
+            @c
+            if (id == 0)
+            {
+                @Html.Raw("</th>")
+            }
+            else
+            {@Html.Raw("</td>")}
+           
+        }
+        @Html.Raw("</tr>")
+        
+        id++;
+    }
+    @Html.Raw("</table>")
+}

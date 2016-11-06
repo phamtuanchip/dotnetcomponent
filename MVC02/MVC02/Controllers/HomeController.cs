@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic.FileIO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -96,7 +97,28 @@ namespace MVC02.Controllers
             public String label;
             public DateTime lastDay;
         }
-
+        public ActionResult ReadCSVFile() {
+            Dictionary<int, String[]> term = new Dictionary<int, string[]>();
+            ViewBag.Data = term;
+            using (TextFieldParser parser = new TextFieldParser(@"c:\temp\test.csv"))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+                int i = 0;
+                while (!parser.EndOfData)
+                {
+                    //Processing row
+                    string[] fields = parser.ReadFields();
+                    term.Add(i, fields);
+                    foreach (string field in fields)
+                    {
+                        //TODO: Process field
+                    }
+                    i++;
+                }
+            }
+            return View();
+        }
         [System.Web.Mvc.HttpPost]
         public JsonResult searchMissionIndex(List<String> ids) {
             List<MissionData> data = new List<MissionData>();
