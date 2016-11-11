@@ -50,5 +50,22 @@ namespace MVC02.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void FtpServer()
+        {
+            FTPClient c = new FTPClient("ftp://ftp.hostbuddy.com/", "antifogtest", "antifogtest", false);
+            Assert.IsNotNull(c.DirectoryListing());
+            foreach (var file in c.DirectoryListing())
+            {
+                System.Console.Out.WriteLine("================" + file);
+                if (file.IndexOf(".csv") > -1)
+                {
+                    c.MoveFileFromServer(file, "done");
+                }
+            } 
+            
+        }
+
     }
 }
