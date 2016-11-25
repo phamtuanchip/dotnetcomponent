@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Microsoft.VisualBasic.FileIO;
+using Microsoft.VisualBasic.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MVC02;
 using MVC02.Controllers;
@@ -65,6 +67,45 @@ namespace MVC02.Tests.Controllers
                 }
             } 
             
+        }
+
+        [TestMethod]
+        public void ReadCsvFile()
+        {
+            
+            
+            using (TextFieldParser parser = new TextFieldParser(@"C:\peopulse\Missions_20161124154501.csv"))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(";");
+                int i = 0;
+                List<PeopulseCsv> csvs = new List<PeopulseCsv>();
+                while (!parser.EndOfData)
+                {
+                    //Processing row
+                    string[] line = parser.ReadFields();
+                    try
+                    {
+                        PeopulseCsv csv = new PeopulseCsv(line);
+                        csvs.Add(csv);
+                    }
+                    catch (Exception e)
+                    {
+                        
+                         Console.Out.WriteLine(String.Format("Error at line {0} with detail {1}",i,e.Message));
+                    }
+                   
+
+                    //foreach (string field in line)
+                    //{
+                    //    //TODO: Process field
+                    //}
+                    i++;
+                }
+                Assert.AreEqual(10, i-1);
+                Console.Out.WriteLine(csvs.ToString());
+                Assert.AreEqual(6, csvs.Count);
+            }
         }
 
     }
