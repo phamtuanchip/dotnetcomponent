@@ -1,6 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-
+using MVC03.Filter;
 namespace MVC03
 {
     public class FilterConfig
@@ -8,6 +8,7 @@ namespace MVC03
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new AllowJsonGetAttribute());
         }
     }
 }
