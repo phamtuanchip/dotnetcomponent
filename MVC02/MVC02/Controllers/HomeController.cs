@@ -188,7 +188,11 @@ namespace MVC02.Controllers
             
             return File(virtualFilePath, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(virtualFilePath));
         }
+        public string ToCSV(IEnumerable<string> collection)
+        {
+            return null;
 
-        
+        }
+
     }
 }
