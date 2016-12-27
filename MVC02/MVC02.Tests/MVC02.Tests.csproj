@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -93,6 +94,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AntiFogDaoModel.cs" />
+    <Compile Include="Controllers\Company.cs" />
+    <Compile Include="Controllers\ContractType.cs" />
+    <Compile Include="Controllers\CsvReader.cs" />
+    <Compile Include="Controllers\EmployeeType.cs" />
+    <Compile Include="Controllers\Gender.cs" />
+    <Compile Include="Controllers\INamedObject.cs" />
+    <Compile Include="Controllers\InterfacePeopulseUtility.cs" />
+    <Compile Include="Controllers\PeopulseCsv.cs" />
+    <Compile Include="Controllers\PeopulseDataException.cs" />
+    <Compile Include="Controllers\Translatable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
