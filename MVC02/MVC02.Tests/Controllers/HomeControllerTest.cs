@@ -108,5 +108,36 @@ namespace MVC02.Tests.Controllers
             }
         }
 
+        private DateTime TakePreviousMonday(DateTime currentDate)
+        {
+            while (true)
+            {
+                if (currentDate.DayOfWeek == DayOfWeek.Monday)
+                {
+                    return currentDate;
+                }
+                currentDate = currentDate.AddDays(-1);
+
+            }
+        }
+
+        private DateTime TakeNextSunday(DateTime currentDate)
+        {
+            while (true)
+            {
+                if (currentDate.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return currentDate;
+                }
+                currentDate = currentDate.AddDays(1);
+
+            }
+        }
+        [TestMethod]
+        public void CalculateWeekDay()
+        {
+            Assert.AreEqual(DayOfWeek.Monday, TakePreviousMonday(DateTime.Now).DayOfWeek);
+            Assert.AreEqual(DayOfWeek.Sunday, TakeNextSunday(DateTime.Now).DayOfWeek);
+        }
     }
 }
