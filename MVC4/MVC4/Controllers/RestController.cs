@@ -23,9 +23,9 @@ namespace MVC4.Controllers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("photos");
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
 
-            return new string[] { blobClient.ToString(), container.Name  };
+           // return new string[] { blobClient.ToString(), container.Name  };
 
             // Loop over items within the container and output the length and URI.
             foreach (IListBlobItem item in container.ListBlobs(null, false))
@@ -63,6 +63,24 @@ namespace MVC4.Controllers
         // POST api/rest
         public void Post([FromBody]string value)
         {
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("myblob");
+
+            // Create or overwrite the "myblob" blob with contents from a local file.
+            using (var fileStream = System.IO.File.OpenRead(@"Docs\storage-how-to-use-blobs.txt"))
+            {
+                blockBlob.UploadFromStream(fileStream);
+            }
         }
 
         // PUT api/rest/5
