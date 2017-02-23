@@ -45,8 +45,7 @@ namespace MVC01.Services
             return response;
         }
 
-        [HttpPost]
-         
+        [HttpPost]         
         public JsonResult<ReminderTask> AddTask([FromBody] ReminderTask value)
         {
             //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
@@ -58,7 +57,18 @@ namespace MVC01.Services
             value.Title = value.Title + "updated";
             return Json(value); ;
         }
-
+        [HttpPost]
+        public JsonResult<ReminderTask[]> AddTasks([FromBody] ReminderTask[] values)
+        {
+            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            // List<ReminderTask> reminder = JsonConvert.DeserializeObject<List<ReminderTask>>(output);
+            //json.UseDataContractJsonSerializer = true;
+            // db.Tasks.Add();
+            // db.SaveChanges();
+            /// HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, value);
+            values.FirstOrDefault().Title = values.FirstOrDefault().Title + "updated";
+            return Json(values); ;
+        }
         // PUT: api/Restful/5
         public HttpResponseMessage Put(int id, [FromBody]string value)
         {

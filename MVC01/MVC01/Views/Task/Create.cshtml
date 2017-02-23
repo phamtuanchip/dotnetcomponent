@@ -166,21 +166,29 @@
             }
         });
         tbClients.push(client);
+        // this data format is ok for rest '/api/Restful/AddTasks',
+        console.log(tbClients);
         var db = JSON.stringify(tbClients);
+        var uri = '/api/Restful/AddTasks';
         localStorage.setItem("tbClients", db);
-
+        db = Object.assign({}, tbClients);
         console.log("The data was saved." + db);
-
-        db = '{"Title":test,"RemindDate":"0001-01-01T00:00:00","GeoLocaltion":{"GeoLocaltionId":0,"Longitude":0.0,"Latitude":0.0,"place":null},"Priority":0,"isRemind":false,"Remided":false}';
+       
+        // this data format is ok for rest '/api/Restful/AddTask',
+        // uri = '/api/Restful/AddTask';
+        db = JSON.stringify({Title:"test",RemindDate:"0001-01-01T00:00:00",GeoLocaltion:{GeoLocaltionId:"0",Longitude:"0.0",Latitude:"0.0",place:"null"},Priority:"0",isRemind:"false",Remided:"false"});
+        //db = JSON.stringify(client);
+        uri = '/api/Restful/AddTask';
+        console.log("The data was sent." + db);
         $.ajax({
             type: 'POST',
-            url: "/api/Restful/AddTask",
+            url: uri,
             data: db,
-            contentType: "application/json",
-            dataType: "application/json",
+            contentType: 'application/json; charset=utf-8',
+        
             success: function (resultData) {
 	        
-                console.log("The data was saved onto server ." +resultData);
+                console.log(resultData);
             },
             error: function (err) {
                 console.log(err);
