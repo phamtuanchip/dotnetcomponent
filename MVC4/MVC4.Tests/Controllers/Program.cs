@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
 
 using System;
 using System.Linq;
 using MVC4.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace MVC4.Controllers
 {
     [TestClass]
@@ -10,7 +12,7 @@ namespace MVC4.Controllers
     {
         [TestMethod]
         int testSqlite(string[] args) {  
-            using (var context = new Models.ChinookContext())
+            using (var context = new ChinookContext())
             {
                 var artists = from a in context.Artists
                               where a.Name.StartsWith("A")
@@ -23,22 +25,22 @@ namespace MVC4.Controllers
                 }
             }
 
-            using (var context = new Models.ChinookContext())
+            using (var context = new ChinookContext())
             {
                 context.Artists.Add(
-                    new Models.Artist
+                    new Artist
                     {
                         Name = "Anberlin",
                         Albums =
                         {
-                new Models.Album { Title = "Cities" },
-                new Models.Album { Title = "New Surrender" }
+                new Album { Title = "Cities" },
+                new Album { Title = "New Surrender" }
                         }
                     });
                 context.SaveChanges();
             }
 
-            using (var context = new Models.ChinookContext())
+            using (var context = new ChinookContext())
             {
                 var police = context.Artists.Single(a => a.Name == "The Police");
                 police.Name = "Police, The";
