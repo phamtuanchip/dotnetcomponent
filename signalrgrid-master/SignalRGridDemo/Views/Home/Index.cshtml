@@ -1,0 +1,57 @@
+﻿<div ng-app="app" ng-controller="signalrGrid">
+    <h1>Employees</h1>
+    <div class="loadingIndicator" ng-show="employees.loading"></div>
+    <div ng-hide="employees.loading">
+        <a class="btn btn-success" ng-click="employees.add()">Add</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees.all" ng-include="employee.displayMode()"></tr>
+            </tbody>
+        </table>
+
+        <h3>Connections</h3>
+        <ul>
+            <li ng-repeat="id in employees.connected" ng-bind="id"></li>
+        </ul>
+    </div>
+    
+
+    <script type="text/ng-template" id="read-template">
+        <td>
+            <a href="#" class="btn btn-default" ng-click="employees.edit(employee)">Edit</a>
+            <a href="#" class="btn btn-warning" ng-click="employees.delete(employee)">Del</a>
+        </td>
+        <td ng-bind="employee.Name"></td>
+        <td ng-bind="employee.Email"></td>
+        <td ng-bind="employee.Salary | currency"></td>
+    </script>
+    <script type="text/ng-template" id="lock-template">
+        <td><div class="btn btn-danger">Locked</div></td>
+        <td ng-bind="employee.Name"></td>
+        <td ng-bind="employee.Email"></td>
+        <td ng-bind="employee.Salary | currency"></td>
+    </script>
+    <script type="text/ng-template" id="edit-template">
+        <td><a href="#" class="btn btn-success" ng-click="employees.done(employee)">Done</a></td>
+        <td><input type="text" ng-model="employee.Name" ng-blur="employees.patch(employee, 'Name')"/></td>
+        <td><input type="text" ng-model="employee.Email" ng-blur="employees.patch(employee, 'Email')" /></td>
+        <td><input type="text" ng-model="employee.Salary" ng-blur="employees.patch(employee, 'Salary')" /></td>
+    </script>
+ </div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.0.0.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-resource.js"></script>
+	<script src="~/Scripts/angular-signalr-hub.js"></script>
+    <script src="~/App/odata.js"></script>
+    <script src="~/App/EmployeeGrid.js"></script>
+}
